@@ -11,9 +11,10 @@ public class ValidateReservation {
 	// Default constructor
 	public ValidateReservation() {}
 	
-	// Calls methods to validate each parameter
-	// Returns boolean indicate whether request parameters are valid
-	// Errors should be retrieved and displayed to use if invalid by calling getErrors()
+	/* Calls methods to validate each parameter
+	 * Returns boolean indicate whether request parameters are valid
+	 * Errors should be retrieved and displayed to use if invalid by calling getErrors() 
+	 */
 	public boolean validate(String name, String numPeople, String room, String date) {
 		// Validate request parameters
 		this.validateName(name);
@@ -25,9 +26,7 @@ public class ValidateReservation {
 		if(errors.isEmpty()) {
 			return true;
 		}
-		else {
-			return false; // Invalid request parameter(s)
-		}
+		return false; // Invalid request parameter(s)
 	}
 
 	// Validates name
