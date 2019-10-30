@@ -6,7 +6,7 @@ import java.util.*;
 public class ValidateReservation {
 
 	private ArrayList<String> errors = new ArrayList<String>(); // Errors get added into here during validation process
-	
+
 	// Default constructor
 	public ValidateReservation() {}
 	
@@ -50,7 +50,6 @@ public class ValidateReservation {
 	
 	public boolean validateNumPeople(String numPeople) {
 		int numberOfPeople;
-		
 		if(numPeople == null) {
 			errors.add("-The number of guests must be entered");
 			return false;
@@ -74,9 +73,13 @@ public class ValidateReservation {
 			errors.add("-An escape room must be selected");
 			return false;
 		}
-		if(!room.equals("Badham") && !room.equals("Strode") && !room.contentEquals("Jigsaw")) {
+		ArrayList<String> escapeRooms = new ArrayList<String>(); // List of valid escape rooms
+		escapeRooms.add("badham preschool"); // Populate list
+		escapeRooms.add("the strode residence");
+		escapeRooms.add("jigsaw's warehouse");
+		if(!escapeRooms.contains(room.toLowerCase())) {
 			errors.add("-Invalid escape room");
-			return false;
+			return false; // Returns false if room not in list (invalid room)
 		}
 		return true;
 	}
