@@ -2,6 +2,7 @@ package thomas.halpert.etn;
 
 import java.text.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class ValidateReservation {
 
@@ -14,7 +15,6 @@ public class ValidateReservation {
 	// Returns boolean indicate whether request parameters are valid
 	// Errors should be retrieved and displayed to use if invalid by calling getErrors()
 	public boolean validate(String name, String numPeople, String room, String date) {
-		
 		// Validate request parameters
 		this.validateName(name);
 		this.validateNumPeople(numPeople); 
@@ -30,11 +30,13 @@ public class ValidateReservation {
 		}
 	}
 
+	// Validates name
 	public boolean validateName(String name) {
 		if(name == null || name.length() == 0)  {
 			errors.add("-Name must be entered");
 			return false;
 		}
+		// Check that name is completely alphabetical
 		else {
 			char[] nameArray = name.toCharArray();
 			for(Character c : nameArray) {
@@ -48,12 +50,14 @@ public class ValidateReservation {
 		return true;
 	}
 	
+	// Validates number of people
 	public boolean validateNumPeople(String numPeople) {
 		int numberOfPeople;
 		if(numPeople == null) {
 			errors.add("-The number of guests must be entered");
 			return false;
 		}
+		// Verify that number of people is an integer
 		try {
 			numberOfPeople = Integer.parseInt(numPeople);
 		}
@@ -61,6 +65,7 @@ public class ValidateReservation {
 			errors.add("-Invalid number entered for number of guests");
 			return false;
 		}
+		// Check if number of people is within valid range
 		if(numberOfPeople < 1 || numberOfPeople > 8) {
 			errors.add("-The number of guests must be between 1 and 8");
 			return false;
@@ -68,6 +73,7 @@ public class ValidateReservation {
 		return true;
 	}
 	
+	// Validates room
 	public boolean validateRoom(String room) {
 		if(room == null) {
 			errors.add("-An escape room must be selected");
