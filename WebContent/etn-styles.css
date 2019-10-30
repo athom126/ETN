@@ -67,6 +67,20 @@ h3 {
 	text-decoration: none;
 }
 
+.badham {
+	font-size: 48px;
+	font-family: 'Schoolbell', cursive;
+}
+
+.strode {
+	font-size: 45px;
+	font-family: 'Playfair Display SC', serif;
+}
+
+.jigsaw {
+	font-size: 48px;
+}
+
 ol {
 	list-style-type: 1;
 	padding-left: 80px;
@@ -229,7 +243,8 @@ input[type="checkbox"] {
 	color: #FFFFFF;
 	font-family: 'Special Elite', cursive;
 	font-size: 30px;
-	margin: 100px;
+	margin-right: 40px;
+	margin-left: 40px;
 }
 
 .disclaimerText {

@@ -42,9 +42,9 @@
 	hostage(s)<br>
 	to escape 
 		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required>
-			<option value="Badham">Badham Preschool</option>
-			<option value="Strode">The Strode Residence</option>
-			<option value="Jigsaw">Jigsaw's Warehouse</option>
+			<option value="Badham Preschool">Badham Preschool</option>
+			<option value="The Strode Residence">The Strode Residence</option>
+			<option value="Jigsaw's Warehouse">Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
 		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
@@ -53,11 +53,11 @@
 			<option value="10-13-2019">Sunday, October 13th, 2019 at 5:00pm</option>
 		</select>.
 		<h3>Disclaimer</h3>
-		<p class="disclaimerText">By submitting this form, I acknowledge that...<br>
+		<span class="disclaimerText">By submitting this form, I acknowledge that...<br>
 		<input type="checkbox" value="agreement1" required/> <label>I understand that on the day of my reservation<br>
 		consent forms will need to be filled out by every hostage.</label><br>
 		<input type="checkbox" value="agreement2" required/> <label>I understand that if I cancel the reservation within 24 hours<br>
-		of the scheduled reservation I will not be refunded.</label></p>
+		of the scheduled reservation I will not be refunded.</label></span><p>
 		<input type="submit" value="Reserve" class="button"/>
 	</form>
 </div>
