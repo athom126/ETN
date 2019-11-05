@@ -11,6 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ETNController")
 public class ETNController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	/************************* DATABASE INFORMATION *************************
+	 * The following information is needed to connect to the remote database:
+	 * 
+	 *		Server: sql9.freemysqlhosting.net
+	 *		Username: sql9310910
+	 * 		Password: 8M4rA4YdVk
+	 *		Port number: 3306
+	 *
+	 * The same information is needed to sign into phpMyAdmin:
+	 * 					http://www.phpmyadmin.co/
+	**************************************************************************/
        
     public ETNController() {
         super();
