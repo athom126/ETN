@@ -1,3 +1,10 @@
+/**
+ * File: ValidateReservation.java
+ * File Description: Contains a class that can be used to  
+ * validate request parameters from the main reservation form
+ * 
+ */
+
 package thomas.halpert.etn;
 
 import java.text.*;
@@ -12,8 +19,8 @@ public class ValidateReservation {
 	public ValidateReservation() {}
 	
 	/* Calls methods to validate each parameter
-	 * Returns boolean indicate whether request parameters are valid
-	 * Errors should be retrieved and displayed to use if invalid by calling getErrors() 
+	 * Returns a boolean indicating whether the request parameters are valid
+	 * Errors should be retrieved and displayed if invalid by calling getErrors() 
 	 */
 	public boolean validate(String name, String numPeople, String room, String date) {
 		// Validate request parameters

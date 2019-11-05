@@ -1,3 +1,8 @@
+/**
+ * File: ETNController.java
+ * File Description: Contains the main controlling servlet for the application
+ */
+
 package thomas.halpert.etn;
 
 import java.io.*;
