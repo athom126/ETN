@@ -85,7 +85,7 @@ public class ValidatePayment {
 	public boolean validEmail(String email) {
 		this.email = email;
 		if(email == null || email.length() == 0) {
-			paymentErrors.add("-Email address must be entered");
+			paymentErrors.add("Email address must be entered");
 			return false;
 		}
 		// Check if email follows proper format of an email address
@@ -93,7 +93,7 @@ public class ValidatePayment {
                       "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; 
 		Pattern pattern = Pattern.compile(regex); // Create pattern specifying format of email address
 		if(!pattern.matcher(email).matches()) {
-			paymentErrors.add("-Invalid email address entered");
+			paymentErrors.add("Invalid email address entered");
 		    return false;
 		}
 		return true;
@@ -103,7 +103,7 @@ public class ValidatePayment {
 	public boolean validName(String name) {
 		this.ccHolder = name;
 		if(name == null || name.length() == 0)  {
-			paymentErrors.add("-Name must be entered");
+			paymentErrors.add("Name must be entered");
 			return false;
 		}
 		// Check that name is completely alphabetical
@@ -112,7 +112,7 @@ public class ValidatePayment {
 			for(Character c : nameArray) {
 				// Ensure that name contains only letters and spaces
 				if(!Character.isLetter(c) && c != ' ') {
-					this.paymentErrors.add("-Invalid name entered");
+					this.paymentErrors.add("Invalid name entered");
 					return false;
 				}
 			}

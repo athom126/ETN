@@ -64,7 +64,7 @@ public class ValidateReservation {
 	// Validates name
 	public boolean validateName(String name) {
 		if(name == null || name.length() == 0)  {
-			errors.add("-Name must be entered");
+			errors.add("Name must be entered");
 			return false;
 		}
 		// Check that name is completely alphabetical
@@ -73,7 +73,7 @@ public class ValidateReservation {
 			for(Character c : nameArray) {
 				// Ensure that name contains only letters and spaces
 				if(!Character.isLetter(c) && c != ' ') {
-					this.errors.add("-Invalid name entered");
+					this.errors.add("Invalid name entered");
 					return false;
 				}
 			}
@@ -85,7 +85,7 @@ public class ValidateReservation {
 	public boolean validateNumPeople(String numPeople) {
 		int numberOfPeople;
 		if(numPeople == null) {
-			errors.add("-The number of guests must be entered");
+			errors.add("The number of guests must be entered");
 			return false;
 		}
 		// Verify that number of people is an integer
@@ -93,12 +93,12 @@ public class ValidateReservation {
 			numberOfPeople = Integer.parseInt(numPeople);
 		}
 		catch(NumberFormatException nfe) {
-			errors.add("-Invalid number entered for number of guests");
+			errors.add("Invalid number entered for number of guests");
 			return false;
 		}
 		// Check if number of people is within valid range
 		if(numberOfPeople < 1 || numberOfPeople > 8) {
-			errors.add("-The number of guests must be between 1 and 8");
+			errors.add("The number of guests must be between 1 and 8");
 			return false;
 		}
 		return true;
@@ -107,7 +107,7 @@ public class ValidateReservation {
 	// Validates room
 	public boolean validateRoom(String room) {
 		if(room == null) {
-			errors.add("-An escape room must be selected");
+			errors.add("An escape room must be selected");
 			return false;
 		}
 		ArrayList<String> escapeRooms = new ArrayList<String>(); // List of valid escape rooms
@@ -115,7 +115,7 @@ public class ValidateReservation {
 		escapeRooms.add("the strode residence");
 		escapeRooms.add("jigsaw's warehouse");
 		if(!escapeRooms.contains(room.toLowerCase())) {
-			errors.add("-Invalid escape room");
+			errors.add("Invalid escape room");
 			return false; // Returns false if room not in list (invalid room)
 		}
 		return true;
@@ -125,13 +125,13 @@ public class ValidateReservation {
 	// TO DO: Check is the date is an open date and in the database
 	public boolean validateDate(String date) {
 		if(date == null) {
-			errors.add("-A date must be selected");
+			errors.add("A reservation date and time must be selected");
 			return false;
 		}
 		try {
 			// TO DO
 		} catch (Exception e) {
-			this.errors.add("-Invalid date entered");
+			this.errors.add("Invalid date entered");
 			return false;
 		}  
 		return true;
