@@ -34,15 +34,15 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 	<div>
+		<% if(payment != null && payment.getErrors().size() > 0) { %>
+		<ul>
+			<% for(int i = 0; i < payment.getErrors().size(); i++) { %>	
+			<li style="color: red; align: center; text-indent: -4px;"><%=payment.getErrors().get(i)%></li>
+		<%	} %>	
+		</ul>
+		<%}%>
 	<form name="form" autocomplete="off" method="post" action="ETNController">
 				<h3>Payment Details</h3>
-				<% if(payment != null && payment.getErrors().size() > 0) { %>
-					<ul>
-					<% for(int i = 0; i < payment.getErrors().size(); i++) { %>	
-						<li style="color: red; align: center; text-indent: -4px;"><%=payment.getErrors().get(i)%></li>
-					<%	} %>	
-					</ul>
-				<%}%>
 						<label for="email">Email: </label>
 						<input type="text" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
 						<br>
@@ -50,9 +50,9 @@
 						<input type="text" name="cardholder" id="cardholder" maxLength="100" title="Name on credit card" value="<%=payment.getCCHolder()%>">
 						<br>
 						<label for="creditCardType">Credit Card Type: </label>
-						<input type="radio" value="discover" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("discover")?"checked":""%>>Discover&nbsp;
-						<input type="radio" value="mastercard" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("mastercard")?"checked":""%>>MasterCard&nbsp;
-						<input type="radio" value="visa" name="creditCardType" id="creditCardType"  title="Credit card company" <%= payment.getType().equals("visa")?"checked":""%>>VISA&nbsp;
+						<input type="radio" value="Discover" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("Discover")?"checked":""%>>Discover&nbsp;
+						<input type="radio" value="MasterCard" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("MasterCard")?"checked":""%>>MasterCard&nbsp;
+						<input type="radio" value="Visa" name="creditCardType" id="creditCardType"  title="Credit card company" <%= payment.getType().equals("Visa")?"checked":""%>>VISA&nbsp;
 						<br>
 						<label for="creditcardnumber">Credit Card Number: </label>
 						<input type="text" name="creditCardNumber" id="creditCardNumber" maxLength="16" title="Credit card number" value="<%=payment.getNumber()%>">
