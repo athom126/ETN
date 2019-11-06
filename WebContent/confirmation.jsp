@@ -3,10 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <% 
 	session = request.getSession(false);
-	ValidateReservation reservation = (ValidateReservation)session.getAttribute("reservation");
-	if(reservation == null) {
-		reservation = new ValidateReservation();
-	}
+	//Receipt receipt = (Receipt)session.getAttribute("receipt");
 %>
 <!DOCTYPE html>
 <HTML>
@@ -33,17 +30,12 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 <div>
-	<form autocomplete="off" method="post" action="ETNController">
 		[name], <br>
 		You have been confirmed to escape <br>
 		[escape room name],<br>
 		on <br>
 		[date and time],<br>
 		with [number of people] hostages.
-		<br><br>
-		<input type="submit" value="Go Back" class="button"/>
-		<input type="submit" value="Confirm" class="button"/>
-	</form>
 </div>
 </body>
 </html>
