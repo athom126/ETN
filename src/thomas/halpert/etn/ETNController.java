@@ -87,8 +87,8 @@ public class ETNController extends HttpServlet {
 			
 			// Validate the payment form parameters, and if there are errors, display checkout form again
 			if(!vp.validate(email, cardholder, ccType, ccNumber, expMonth, expYear)) {
-				ArrayList<String> errors = vp.getErrors();
-				request.setAttribute("errors", errors);
+//				ArrayList<String> errors = vp.getErrors();
+				request.setAttribute("payment", vp);
 				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); 
 			}
 			// If there are no errors, proceed to checkout

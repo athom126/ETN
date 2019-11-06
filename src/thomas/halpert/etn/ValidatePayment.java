@@ -66,6 +66,8 @@ public class ValidatePayment {
 	public boolean validate(String email, String name, String ccType, String ccNum, String ccExpMonth, String ccExpYear) {
 		
 		// Invoke methods to validate payment request parameters
+		this.validEmail(email);
+		this.validName(name);
 		this.validCCType(ccType);
 		this.validCCNumber(ccNum);
 		this.validMonth(ccExpMonth);
