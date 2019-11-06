@@ -25,9 +25,24 @@ public class ValidatePayment {
 	
 	ArrayList<String> paymentErrors = new ArrayList<String>(); // Contains any errors that occur during payment
 	
-	public ValidatePayment() {}
+	public ValidatePayment() {
+		this.email = "";
+		this.ccHolder = "";
+		this.ccNum = "";
+		this.ccType = "";
+		this.month = "";
+		this.year = "";
+	}
 	
 	/* Accessors */
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public String getCCHolder() {
+		return this.ccHolder;
+	}
+	
 	public String getType() {
 		return this.ccType;
 	}
@@ -208,6 +223,10 @@ public class ValidatePayment {
 			return false;
 		}
 		return true;
+	}
+	
+	public ArrayList<String> getErrors() {
+		return this.paymentErrors;
 	}
 	
 }

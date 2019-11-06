@@ -12,11 +12,38 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class ValidateReservation {
-
+	
+	String name; // Stores name reservation is under
+	String numPeople; // Store number of participants
+	String room; // Stores selected room
+	String date; // Store date of reservation
+	
 	private ArrayList<String> errors = new ArrayList<String>(); // Errors get added into here during validation process
 
 	// Default constructor
-	public ValidateReservation() {}
+	public ValidateReservation() {
+		this.name = "";
+		this.numPeople = "";
+		this.room = "";
+		this.date = "";
+	}
+	
+	// Accessors 
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getNumPeople() {
+		return this.numPeople;
+	}
+	
+	public String getRoom() {
+		return this.room;
+	}
+	
+	public String getDate() {
+		return this.date;
+	}
 	
 	/* Calls methods to validate each parameter
 	 * Returns a boolean indicating whether the request parameters are valid

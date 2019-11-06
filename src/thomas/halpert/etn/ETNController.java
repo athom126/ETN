@@ -50,18 +50,52 @@ public class ETNController extends HttpServlet {
 		ValidateReservation vr = new ValidateReservation();
 		
 		// Validate the parameters
+		// If reservation form contain errors, display reservation form again
 		if(!vr.validate(name, numPeople, room, date)) {
 			ArrayList<String> errors = vr.getErrors();
-			request.setAttribute("errors", errors);
-			this.getServletContext().getRequestDispatcher("/errors.jsp").forward(request, response);
+			request.setAttribute("errors", errors); 
+			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
 		}
-		this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response);
-	
-//		response.getWriter().append("Served at: ").append(request.getContextPath()); // Auto-generated
+		// If reservation form contains no errors, proceed to checkout
+		else {
+			response.sendRedirect("/checkout.jsp");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		// If a request to create a reservation is made, invoke doGet()
+		if(request.getParameter("Reserve") != null) {
+			doGet(request, response);
+		}
+		
+		// If a request to go back during the payment process is made, display the reservation form
+		else if(request.getParameter("Go Back") != null) {
+			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
+		}
+		
+		// If a request to confirm payment is made, validate the payment form and display the payment form or confirmation page
+		else if(request.getParameter("Confirm") != null) {
+			// Get request parameters from payment form
+			String email = request.getParameter("email");
+			String cardholder = request.getParameter("cardholder");
+			String ccType = request.getParameter("creditCardType");
+			String ccNumber = request.getParameter("creditCardNumber");
+			String expMonth = request.getParameter("expMonth");
+			String expYear = request.getParameter("expYear");
+			ValidatePayment vp = new ValidatePayment(); // Create ValidatePayment object to validate request parameters
+			
+			// Validate the payment form parameters, and if there are errors, display checkout form again
+			if(!vp.validate(email, cardholder, ccType, ccNumber, expMonth, expYear)) {
+				ArrayList<String> errors = vp.getErrors();
+				request.setAttribute("errors", errors);
+				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); 
+			}
+			// If there are no errors, proceed to checkout
+			else {
+				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response);
+			}
+		}
 	}
 
 }
