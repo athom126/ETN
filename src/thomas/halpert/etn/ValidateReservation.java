@@ -7,9 +7,7 @@
 
 package thomas.halpert.etn;
 
-import java.text.*;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class ValidateReservation {
 	
