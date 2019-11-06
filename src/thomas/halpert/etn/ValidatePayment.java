@@ -122,7 +122,9 @@ public class ValidatePayment {
 	
 	// Validates credit card company
 	public boolean validCCType(String ccType) {
+		this.ccType = ccType;
 		if(ccType == null || ccType == "") {
+			this.ccType = "";
 			this.paymentErrors.add("A credit card type must be selected");
 			return false;
 		}
@@ -139,6 +141,7 @@ public class ValidatePayment {
 	
 	// Validates credit card number
 	public boolean validCCNumber(String ccNum) {
+		this.ccNum = ccNum;
 		if(ccNum == null || ccNum == "") {
 			this.paymentErrors.add("A credit card number must be entered");
 			return false;
