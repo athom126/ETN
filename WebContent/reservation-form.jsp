@@ -1,5 +1,13 @@
+<%@ page import="java.util.*, java.io.*, thomas.halpert.etn.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<% 
+	session = request.getSession(false);
+	ValidateReservation reservation = (ValidateReservation)session.getAttribute("reservation");
+	if(reservation == null) {
+		reservation = new ValidateReservation();
+	}
+%>
 <!DOCTYPE html>
 <HTML>
 	<head>
@@ -25,32 +33,39 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 <div>
+	<% if(reservation != null && reservation.getErrors().size() > 0) { %>
+		<ul>
+		<% for(int i = 0; i < reservation.getErrors().size(); i++) { %>	
+				<li style="color: red; align: center; text-indent: -4px;"><%=reservation.getErrors().get(i)%></li>
+		<%	} %>	
+		</ul>
+	<%}%>
 	<form autocomplete="off" method="post" action="ETNController">
 		<label class="firstLetter">I&nbsp;</label>,&nbsp;
-		<input type="text" name="name" title="Your name" required/> , <br>
+		<input type="text" name="name" title="Your name" required value="<%=reservation.getName()%>"/> , <br>
 		am bringing 
 		<select name="numberOfPeople" id="numberOfPeople" title="Total number of people in group including yourself" required>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
+			<option value="1" <%= reservation.getNumPeople().equals("1")?"selected":""%>>1</option>
+			<option value="2" <%= reservation.getNumPeople().equals("2")?"selected":""%>>2</option>
+			<option value="3" <%= reservation.getNumPeople().equals("3")?"selected":""%>>3</option>
+			<option value="4" <%= reservation.getNumPeople().equals("4")?"selected":""%>>4</option>
+			<option value="5" <%= reservation.getNumPeople().equals("5")?"selected":""%>>5</option>
+			<option value="6" <%= reservation.getNumPeople().equals("6")?"selected":""%>>6</option>
+			<option value="7" <%= reservation.getNumPeople().equals("7")?"selected":""%>>7</option>
+			<option value="8" <%= reservation.getNumPeople().equals("8")?"selected":""%>>8</option>
 		</select>
 	hostage(s)<br>
 	to escape 
 		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required>
-			<option value="Badham Preschool">Badham Preschool</option>
-			<option value="The Strode Residence">The Strode Residence</option>
-			<option value="Jigsaw's Warehouse">Jigsaw's Warehouse</option>
+			<option value="Badham Preschool" <%= reservation.getRoom().equals("badham preschool")?"selected":""%>>Badham Preschool</option>
+			<option value="The Strode Residence" <%= reservation.getRoom().equals("the strode residence")?"selected":""%>>The Strode Residence</option>
+			<option value="Jigsaw's Warehouse"<%= reservation.getRoom().equals("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
 		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
-			<option value="10-11-2019">Friday, October 11th, 2019 at 5:00pm</option>
-			<option value="10-12-2019">Saturday, October 12th, 2019 at 5:00pm</option>
-			<option value="10-13-2019">Sunday, October 13th, 2019 at 5:00pm</option>
+			<option value="10-11-2019" <%= reservation.getDate().equals("10/11/2019")?"selected":""%>>Friday, October 11th, 2019 at 5:00pm</option>
+			<option value="10-12-2019"<%= reservation.getDate().equals("10/12/2019")?"selected":""%>>Saturday, October 12th, 2019 at 5:00pm</option>
+			<option value="10-13-2019"<%= reservation.getDate().equals("10/13/2019")?"selected":""%>>Sunday, October 13th, 2019 at 5:00pm</option>
 		</select>.
 		<h3>Disclaimer</h3>
 		<span class="disclaimerText">By submitting this form, I acknowledge that...<br>
