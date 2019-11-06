@@ -52,13 +52,13 @@ public class ETNController extends HttpServlet {
 		// Validate the parameters
 		// If reservation form contain errors, display reservation form again
 		if(!vr.validate(name, numPeople, room, date)) {
-			ArrayList<String> errors = vr.getErrors();
-			request.setAttribute("errors", errors); 
+			request.setAttribute("reservation", vr); 
 			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
 		}
 		// If reservation form contains no errors, proceed to checkout
 		else {
-			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); 
+			// TO DO: Create Receipt class and object and set the collected parameters
+			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); // Display checkout page
 		}
 	}
 
@@ -87,13 +87,12 @@ public class ETNController extends HttpServlet {
 			
 			// Validate the payment form parameters, and if there are errors, display checkout form again
 			if(!vp.validate(email, cardholder, ccType, ccNumber, expMonth, expYear)) {
-//				ArrayList<String> errors = vp.getErrors();
 				request.setAttribute("payment", vp);
-				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); 
+				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
 			}
 			// If there are no errors, proceed to checkout
 			else {
-				// TO DO: Would be nice to have a receipt class to model a receipt for the confirmation page
+				// TO DO: Add the user to the database and send confirmation email
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
 			}
 		}
