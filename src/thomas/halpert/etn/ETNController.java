@@ -58,7 +58,7 @@ public class ETNController extends HttpServlet {
 		}
 		// If reservation form contains no errors, proceed to checkout
 		else {
-			response.sendRedirect("/checkout.jsp");
+			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); 
 		}
 	}
 
@@ -69,12 +69,12 @@ public class ETNController extends HttpServlet {
 			doGet(request, response);
 		}
 		
-		// If a request to go back during the payment process is made, display the reservation form
+		// If a request to go back to the reservation form during the payment process is made, display the reservation form
 		else if(request.getParameter("Go Back") != null) {
 			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
 		}
 		
-		// If a request to confirm payment is made, validate the payment form and display the payment form or confirmation page
+		// If a request to confirm the payment is made, validate the form, then display the payment form or confirmation page
 		else if(request.getParameter("Confirm") != null) {
 			// Get request parameters from payment form
 			String email = request.getParameter("email");
@@ -93,7 +93,8 @@ public class ETNController extends HttpServlet {
 			}
 			// If there are no errors, proceed to checkout
 			else {
-				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response);
+				// TO DO: Would be nice to have a receipt class to model a receipt for the confirmation page
+				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
 			}
 		}
 	}
