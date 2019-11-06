@@ -37,7 +37,7 @@
 		<% if(payment != null && payment.getErrors().size() > 0) { %>
 		<ul>
 			<% for(int i = 0; i < payment.getErrors().size(); i++) { %>	
-			<li style="color: red; align: center; text-indent: -4px;"><%=payment.getErrors().get(i)%></li>
+			<li style="color: #820b1e; list-style-type:none"><span style="left: -10px;"><%=payment.getErrors().get(i)%></span></li>
 		<%	} %>	
 		</ul>
 		<%}%>

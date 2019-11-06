@@ -36,7 +36,7 @@
 	<% if(reservation != null && reservation.getErrors().size() > 0) { %>
 		<ul>
 		<% for(int i = 0; i < reservation.getErrors().size(); i++) { %>	
-				<li style="color: red; align: center; text-indent: -4px;"><%=reservation.getErrors().get(i)%></li>
+			<li style="color: #820b1e; list-style-type:none"><span style="left: -10px;"><%=reservation.getErrors().get(i)%></span></li>
 		<%	} %>	
 		</ul>
 	<%}%>
