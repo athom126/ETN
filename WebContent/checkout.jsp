@@ -3,7 +3,8 @@
     pageEncoding="ISO-8859-1"%>
 <% 
 	session = request.getSession(false);
-	ValidatePayment payment = (ValidatePayment)session.getAttribute("payment");
+	ValidatePayment payment = (ValidatePayment)request.getAttribute("payment");
+	/*ValidatePayment payment = (ValidatePayment)session.getAttribute("payment");*/
 	if(payment == null) {
 		payment = new ValidatePayment();
 	}
