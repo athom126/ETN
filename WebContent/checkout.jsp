@@ -86,8 +86,8 @@
 							<option value="2030" <%= payment.getYear().equals("2030")?"selected":""%>>2030</option>
 						</select>
 						<br><br>
-					<input type="submit" name="edit" id="Go Back" value="Go Back" class="button">
-					<input type="submit" name="confirm" id="Confirm" value="Confirm" class="button">
+					<input type="submit" name="Go Back" id="Go Back" value="Go Back" class="button">
+					<input type="submit" name="Confirm" id="Confirm" value="Confirm" class="button">
 			</form>
 		</div>
 	</body>

@@ -3,7 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <% 
 	session = request.getSession(false);
-	ValidateReservation reservation = (ValidateReservation)session.getAttribute("reservation");
+	ValidateReservation reservation = (ValidateReservation)request.getAttribute("reservation");
 	if(reservation == null) {
 		reservation = new ValidateReservation();
 	}
@@ -73,7 +73,7 @@
 		consent forms will need to be filled out by every hostage.</label><br>
 		<input type="checkbox" value="agreement2" required/> <label>I understand that if I cancel the reservation within 24 hours<br>
 		of the scheduled reservation I will not be refunded.</label></span><p>
-		<input type="submit" value="Reserve" class="button"/>
+		<input type="submit" id="Reserve" name="Reserve" value="Reserve" class="button"/>
 	</form>
 </div>
 </body>
