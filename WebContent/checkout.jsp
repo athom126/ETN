@@ -33,7 +33,7 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 	<div>
-	<form name="form" autocomplete="on" method="post" action="ETNController">
+	<form name="form" autocomplete="off" method="post" action="ETNController">
 				<h3>Payment Details</h3>
 				<% if(payment != null && payment.getErrors().size() > 0) { %>
 					<ul>
