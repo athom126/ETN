@@ -46,7 +46,7 @@
 						<input type="text" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
 						<br>
 						<label for="cardholder">Name of Card Holder: </label>
-						<input type="text" name="cardholder" id="cardholder" maxLength="100" title="Name of credit card" value="<%=payment.getCCHolder()%>">
+						<input type="text" name="cardholder" id="cardholder" maxLength="100" title="Name on credit card" value="<%=payment.getCCHolder()%>">
 						<br>
 						<label for="creditCardType">Credit Card Type: </label>
 						<input type="radio" value="discover" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("discover")?"checked":""%>>Discover&nbsp;
