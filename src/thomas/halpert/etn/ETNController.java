@@ -41,11 +41,12 @@ public class ETNController extends HttpServlet {
 		String room = request.getParameter("escapeRoom");
 		String date = request.getParameter("reservationDate");
 		
-//		String name = "Invalid 1";
-//		String numPeople = "Three";
-//		String room = "Invalid name 6";
-//		String date = "OCT-31-2019";
-//		
+		// Use for testing
+//		String name = "Laur!e Str0de";
+//		String numPeople = "three";
+//		String room = "badham school";
+//		String date = "OCT-32-2019";
+	
 		// Used to validate request parameters
 		ValidateReservation vr = new ValidateReservation();
 		
