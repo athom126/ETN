@@ -1,6 +1,10 @@
 <%@ page import="java.util.*, java.io.*, thomas.halpert.etn.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.Statement"%>
+<%@ page import="java.sql.Connection"%>    
 <% 
 	session = request.getSession(false);
 	ValidateReservation reservation = (ValidateReservation)request.getAttribute("reservation");
@@ -62,6 +66,59 @@
 			<option value="Jigsaw's Warehouse"<%= reservation.getRoom().equals("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
+		<%
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		String connectionUrl = "jdbc:mysql://sql9.freemysqlhosting.net:3306";
+		String dbName = "/sql9310910";
+		String userId = "sql9310910";
+		String password = "8M4rA4YdVk";
+		
+		try {
+			Class.forName(driverName);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		
+		%>
+		
+		<h2 align="center"><b>Retrieving data from DB</b></h2>
+		<table align="center" cellpadding="5" cellspacing="5" border="1">
+		<tr> </tr>
+		<tr>
+			<td><b>Room</b></td>
+			<td><b>Date</b></td>
+			<td><b>Email</b></td>
+			<td><b>Status</b></td>
+		</tr>
+		
+		<%
+		try{
+			conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
+			statement = conn.createStatement();
+			String sql = "Select * from RESERVATION";
+			
+			rs = statement.executeQuery(sql);
+			while(rs.next())
+			{
+				%>
+				<tr>
+				<td><%=rs.getString("room") %></td>
+				<td><%=rs.getString("date") %></td>
+				<td><%=rs.getString("email") %></td>
+				<td><%=rs.getString("status") %></td>
+				</tr>
+				<%
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		%>
+		</table>
+		
 		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
 			<option value="10-11-2019" <%= reservation.getDate().equals("10/11/2019")?"selected":""%>>Friday, October 11th, 2019 at 5:00pm</option>
 			<option value="10-12-2019"<%= reservation.getDate().equals("10/12/2019")?"selected":""%>>Saturday, October 12th, 2019 at 5:00pm</option>
