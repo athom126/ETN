@@ -86,16 +86,9 @@
 		
 		%>
 		
-		<h2 align="center"><b>Retrieving data from DB</b></h2>
-		<table align="center" cellpadding="5" cellspacing="5" border="1">
-		<tr> </tr>
-		<tr>
-			<td><b>Room</b></td>
-			<td><b>Date</b></td>
-			<td><b>Email</b></td>
-			<td><b>Status</b></td>
-		</tr>
 		
+		
+		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
 		<%
 		try{
 			conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
@@ -103,35 +96,22 @@
 			String sql = "Select * from RESERVATION";
 			
 			rs = statement.executeQuery(sql);
+			//ToDo: don't repeat time slots. only show available slots for selected rooms
 			while(rs.next())
 			{
-				%>
-				<tr>
-				<td><%=rs.getString("room") %></td>
-				<% 
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
 				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY hh:mm aa");
 				%>
-				<td><%=day.format(date)%></td>
-				<td><%=df.format(date)%></td>
-				<td><%=rs.getString("email") %></td>
-				<td><%=rs.getString("status") %></td>
-				</tr>
+				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
 				<%
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		%>
-		</table>
-		
-		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
-			<option value="10-11-2019" <%= reservation.getDate().equals("10/11/2019")?"selected":""%>>Friday, October 11th, 2019 at 5:00pm</option>
-			<option value="10-12-2019"<%= reservation.getDate().equals("10/12/2019")?"selected":""%>>Saturday, October 12th, 2019 at 5:00pm</option>
-			<option value="10-13-2019"<%= reservation.getDate().equals("10/13/2019")?"selected":""%>>Sunday, October 13th, 2019 at 5:00pm</option>
 		</select>.
 		<h3>Disclaimer</h3>
 		<span class="disclaimerText">By submitting this form, I acknowledge that...<br>
