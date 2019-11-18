@@ -5,6 +5,7 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.Connection"%>    
+<%@ page import="java.text.*" %>
 <% 
 	session = request.getSession(false);
 	ValidateReservation reservation = (ValidateReservation)request.getAttribute("reservation");
@@ -107,7 +108,15 @@
 				%>
 				<tr>
 				<td><%=rs.getString("room") %></td>
-				<td><%=rs.getString("date") %></td>
+				<% 
+				java.sql.Timestamp ts = rs.getTimestamp("date");
+				java.util.Date date = ts;
+				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY hh:mm aa");
+				%>
+				<td><%=day.format(date)%></td>
+				<td><%=df.format(date)%></td>
 				<td><%=rs.getString("email") %></td>
 				<td><%=rs.getString("status") %></td>
 				</tr>
