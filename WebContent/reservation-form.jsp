@@ -4,7 +4,8 @@
 <%@ page import="java.sql.DriverManager"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.sql.Statement"%>
-<%@ page import="java.sql.Connection"%>    
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.PreparedStatement"%>    
 <%@ page import="java.text.*" %>
 <% 
 	session = request.getSession(false);
@@ -81,21 +82,25 @@
 		}
 		
 		Connection conn = null;
-		Statement statement = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		%>
-		
-		
-		
 		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
 		<%
+		String selectedRoom = "badham preschool"; //default to first option in list
+		if(!reservation.getRoom().equalsIgnoreCase(""))
+		{
+			//If reservation exists with a room, it will be selected.
+			selectedRoom = reservation.getRoom(); 
+		}
 		try{
 			conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
-			statement = conn.createStatement();
-			String sql = "Select * from RESERVATION";
+			String query = "Select * from RESERVATION where Room = ? and Status = 'open'";
 			
-			rs = statement.executeQuery(sql);
+			ps = conn.prepareStatement(query);
+			ps.setString(1, selectedRoom);
+			rs = ps.executeQuery();
 			//ToDo: don't repeat time slots. only show available slots for selected rooms
 			while(rs.next())
 			{
@@ -110,6 +115,13 @@
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs != null) {
+				rs.close();
+			}
+			if(ps != null) {
+				ps.close();
+			}
 		}
 		%>
 		</select>.
