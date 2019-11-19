@@ -20,6 +20,7 @@
 		<title>Nightmare On Your Street</title>
 		<link href="etn-styles.css" rel="stylesheet" type ="text/css"/>
 		<link href="https://fonts.googleapis.com/css?family=Poppins|Indie+Flower|Special+Elite|Nosifer&display=swap" rel="stylesheet">
+		<script src="etn.js"></script>
 </head>
 
 <body oncontextmenu="return false;" class="">
@@ -62,10 +63,10 @@
 		</select>
 	hostage(s)<br>
 	to escape 
-		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required>
+		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required onchange="onRoomSelectionChange()">
 			<option value="Badham Preschool" <%= reservation.getRoom().equals("badham preschool")?"selected":""%>>Badham Preschool</option>
 			<option value="The Strode Residence" <%= reservation.getRoom().equals("the strode residence")?"selected":""%>>The Strode Residence</option>
-			<option value="Jigsaw's Warehouse"<%= reservation.getRoom().equals("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
+			<option value="Jigsaws Warehouse" <%= reservation.getRoom().equals("jigsaws warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
 		<%
@@ -84,10 +85,6 @@
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
-		%>
-		<select name="reservationDate" id="reservationDate" title="Desired reservation date" required>
-		<%
 		String selectedRoom = "badham preschool"; //default to first option in list
 		if(!reservation.getRoom().equalsIgnoreCase(""))
 		{
@@ -96,19 +93,72 @@
 		}
 		try{
 			conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
-			String query = "Select * from RESERVATION where Room = ? and Status = 'open'";
+			String query = "SELECT * FROM RESERVATION WHERE (Room = ? AND Status = 'open') or"
+					+ " (Room = ? AND Status = 'hold')";
 			
 			ps = conn.prepareStatement(query);
-			ps.setString(1, selectedRoom);
+			
+		%>
+		<select name="reservationDateBP" id="reservationDateBP" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("badham preschool")?"":"style=\"display:none\""%>>
+		<%
+			
+			ps.setString(1, "badham preschool");
+			ps.setString(2, "badham preschool");
 			rs = ps.executeQuery();
-			//ToDo: don't repeat time slots. only show available slots for selected rooms
+			
 			while(rs.next())
 			{
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
 				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
-				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY hh:mm aa");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
+				%>
+				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
+				<%
+			}
+			if(rs != null) {
+				rs.close();
+			}
+		%>
+		</select>
+		<select name="reservationDateSR" id="reservationDateSR" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("the strode residence")?"":"style=\"display:none\""%>>
+		<%
+			
+			ps.setString(1, "the strode residence");
+			ps.setString(2, "the strode residence");
+			rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				java.sql.Timestamp ts = rs.getTimestamp("date");
+				java.util.Date date = ts;
+				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
+				%>
+				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
+				<%
+			}
+			if(rs != null) {
+				rs.close();
+			}
+		%>
+		</select>
+		<select name="reservationDateJW" id="reservationDateJW" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("jigsaws warehouse")?"":"style=\"display:none\""%>>
+		<%
+			
+			ps.setString(1, "jigsaws warehouse");
+			ps.setString(2, "jigsaws warehouse");
+			rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				java.sql.Timestamp ts = rs.getTimestamp("date");
+				java.util.Date date = ts;
+				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
 				%>
 				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
 				<%
