@@ -39,7 +39,17 @@ public class ETNController extends HttpServlet {
 		String name = request.getParameter("name");
 		String numPeople = request.getParameter("numberOfPeople");
 		String room = request.getParameter("escapeRoom");
-		String date = request.getParameter("reservationDate");
+		String date = "";
+		// Retrieve date depending on which drop down list was displayed
+		if(request.getParameter("reservationDateSR") != null) {
+			date = request.getParameter("reservationDateSR");		
+		}
+		else if(request.getParameter("reservationDateJW") != null) {
+			date = request.getParameter("reservationDateJW");		
+		}
+		else if(request.getParameter("reservationDateBP") != null) {
+			date = request.getParameter("reservationDateBP");		
+		}
 		
 		// Use for testing
 //		String name = "Laur!e Str0de";

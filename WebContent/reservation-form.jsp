@@ -66,7 +66,7 @@
 		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required onchange="onRoomSelectionChange()">
 			<option value="Badham Preschool" <%= reservation.getRoom().equals("badham preschool")?"selected":""%>>Badham Preschool</option>
 			<option value="The Strode Residence" <%= reservation.getRoom().equals("the strode residence")?"selected":""%>>The Strode Residence</option>
-			<option value="Jigsaws Warehouse" <%= reservation.getRoom().equals("jigsaws warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
+			<option value="Jigsaw's Warehouse" <%= reservation.getRoom().equals("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
 		<%
@@ -85,7 +85,7 @@
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String selectedRoom = "badham preschool"; //default to first option in list
+		String selectedRoom = "Badham Preschool"; //default to first option in list
 		if(!reservation.getRoom().equalsIgnoreCase(""))
 		{
 			//If reservation exists with a room, it will be selected.
@@ -99,11 +99,11 @@
 			ps = conn.prepareStatement(query);
 			
 		%>
-		<select name="reservationDateBP" id="reservationDateBP" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("badham preschool")?"":"style=\"display:none\""%>>
+		<select name="reservationDateBP" id="reservationDateBP" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("Badham Preschool")?"":"style=\"display:none\""%>>
 		<%
 			
-			ps.setString(1, "badham preschool");
-			ps.setString(2, "badham preschool");
+			ps.setString(1, "Badham Preschool");
+			ps.setString(2, "Badham Preschool");
 			rs = ps.executeQuery();
 			
 			while(rs.next())
@@ -122,11 +122,11 @@
 			}
 		%>
 		</select>
-		<select name="reservationDateSR" id="reservationDateSR" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("the strode residence")?"":"style=\"display:none\""%>>
+		<select name="reservationDateSR" id="reservationDateSR" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("The Strode Residence")?"":"style=\"display:none\""%>>
 		<%
 			
-			ps.setString(1, "the strode residence");
-			ps.setString(2, "the strode residence");
+			ps.setString(1, "The Strode Residence");
+			ps.setString(2, "The Strode Residence");
 			rs = ps.executeQuery();
 			
 			while(rs.next())
@@ -145,11 +145,11 @@
 			}
 		%>
 		</select>
-		<select name="reservationDateJW" id="reservationDateJW" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("jigsaws warehouse")?"":"style=\"display:none\""%>>
+		<select name="reservationDateJW" id="reservationDateJW" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("Jigsaw's Warehouse")?"":"style=\"display:none\""%>>
 		<%
 			
-			ps.setString(1, "jigsaws warehouse");
-			ps.setString(2, "jigsaws warehouse");
+			ps.setString(1, "Jigsaws Warehouse");
+			ps.setString(2, "Jigsaws Warehouse");
 			rs = ps.executeQuery();
 			
 			while(rs.next())
