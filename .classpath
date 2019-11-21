@@ -13,7 +13,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/JHU/EN605_682/mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar"/>
-	<classpathentry kind="lib" path="D:/JHU/EN605_682/apache-tomcat-9.0.27/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar"/>
+	<classpathentry kind="lib" path="C:/Tomcat/apache-tomcat-9.0.24/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/violi/Desktop/jaf-1_1_1/jaf-1.1.1/activation.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
