@@ -44,7 +44,7 @@
 	<form name="form" autocomplete="off" method="post" action="ETNController">
 				<h3>Payment Details</h3>
 						<label for="email">Email: </label>
-						<input type="text" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
+						<input type="email" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
 						<br>
 						<label for="cardholder">Name of Card Holder: </label>
 						<input type="text" name="cardholder" id="cardholder" maxLength="100" title="Name on credit card" value="<%=payment.getCCHolder()%>">
