@@ -7,6 +7,9 @@ package thomas.halpert.etn;
 
 import java.io.*;
 import java.util.*;
+import java.lang.*;
+
+//import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +30,21 @@ public class ETNController extends HttpServlet {
 	 *
 	 * The same information is needed to sign into phpMyAdmin:
 	 * 					http://www.phpmyadmin.co/
+	**************************************************************************/
+	
+	/**************************** JAVA MAIL INFO ****************************
+			
+			Username: noys.noreply@gmail.com
+			Password: n!ghtmar3
+			
+			Properties props = new Properties();
+			props.put("mail.transport.protocol", "smtps");
+			props.put("mail.smtps.host", "smtp.gmail.com");
+			props.put("mail.smtps.port", 465);
+			props.put("mail.smtps.auth", "true");
+			props.put("mail.smtps.quitwait", "false");
+			Session session = Session.getDefaultInstance(props);
+			
 	**************************************************************************/
        
     public ETNController() {
