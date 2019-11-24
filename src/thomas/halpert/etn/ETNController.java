@@ -15,6 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.Session;
 
 @WebServlet("/ETNController")
 public class ETNController extends HttpServlet {
@@ -59,15 +62,17 @@ public class ETNController extends HttpServlet {
 		String room = request.getParameter("escapeRoom");
 		String date = "";
 		// Retrieve date depending on which drop down list was displayed
-		if(request.getParameter("reservationDateSR") != null) {
-			date = request.getParameter("reservationDateSR");		
-		}
-		else if(request.getParameter("reservationDateJW") != null) {
-			date = request.getParameter("reservationDateJW");		
-		}
-		else if(request.getParameter("reservationDateBP") != null) {
+		if(room.equalsIgnoreCase("Badham Preschool")) {
 			date = request.getParameter("reservationDateBP");		
 		}
+		else if(room.equalsIgnoreCase("The Strode Residence")) {
+			date = request.getParameter("reservationDateSR");		
+		}
+		else if(room.equalsIgnoreCase("Jigsaw's Warehouse")) {
+			date = request.getParameter("reservationDateJW");
+		}
+		System.out.println("Room Selected: " + room);
+		System.out.println("BP: " + request.getParameter("reservationDateBP") + ", SR: " + request.getParameter("reservationDateSR") + ", JW: " + request.getParameter("reservationDateJW"));
 		
 		// Use for testing
 //		String name = "Laur!e Str0de";
@@ -76,12 +81,20 @@ public class ETNController extends HttpServlet {
 //		String date = "OCT-32-2019";
 	
 		// Used to validate request parameters
-		ValidateReservation vr = new ValidateReservation();
+		HttpSession session = request.getSession(false);
+		ValidateReservation vr = (ValidateReservation)session.getAttribute("reservation");
+		if(vr == null) {
+			vr = new ValidateReservation();
+		}
+		vr.setName(name);
+		vr.setNumPeople(numPeople);
+		vr.setRoom(room);
+		vr.setDate(date);
+		session.setAttribute("reservation", vr);
 		
 		// Validate the parameters
 		// If reservation form contain errors, display reservation form again
 		if(!vr.validate(name, numPeople, room, date)) {
-			request.setAttribute("reservation", vr); 
 			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
 		}
 		// If reservation form contains no errors, proceed to checkout
@@ -112,15 +125,46 @@ public class ETNController extends HttpServlet {
 			String ccNumber = request.getParameter("creditCardNumber");
 			String expMonth = request.getParameter("expMonth");
 			String expYear = request.getParameter("expYear");
-			ValidatePayment vp = new ValidatePayment(); // Create ValidatePayment object to validate request parameters
+			HttpSession session = request.getSession(false);
+			ValidatePayment vp = (ValidatePayment)session.getAttribute("payment");
+			if(vp == null) {
+				vp = new ValidatePayment(); // Create ValidatePayment object to validate request parameters
+			}
+			vp.setEmail(email);
+			vp.setCCHolder(email);
+			vp.setType(email);
+			vp.setNumber(email);
+			vp.setMonth(email);
+			vp.setYear(email);
+			session.setAttribute("payment", vp);
 			
 			// Validate the payment form parameters, and if there are errors, display checkout form again
 			if(!vp.validate(email, cardholder, ccType, ccNumber, expMonth, expYear)) {
-				request.setAttribute("payment", vp);
 				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
 			}
 			// If there are no errors, proceed to checkout
 			else {
+				
+				Receipt receipt = (Receipt)session.getAttribute("receipt");
+				if(receipt == null)
+				{
+					receipt = new Receipt();
+				}
+				ValidateReservation vr = (ValidateReservation)session.getAttribute("reservation"); 
+				if(vr == null)
+				{
+					//shouldn't be null here, report error?
+					session.setAttribute("errorMsg", "Unable to find reservation data in session");
+				}
+				else
+				{
+					receipt.setName(vr.getName());
+					receipt.setEmail(email);
+					receipt.setNumPeople(vr.getNumPeople());
+					receipt.setRoom(vr.getRoom());
+					receipt.setDate(vr.getDate());
+					session.setAttribute("receipt", receipt);
+				}
 				// TO DO: Add the user to the database and send confirmation email
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
 			}

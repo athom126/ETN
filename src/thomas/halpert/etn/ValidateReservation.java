@@ -25,6 +25,7 @@ public class ValidateReservation {
 		this.room = "";
 		this.date = "";
 	}
+
 	
 	// Accessors 
 	public String getName() {
@@ -41,6 +42,23 @@ public class ValidateReservation {
 	
 	public String getDate() {
 		return this.date;
+	}
+	
+	// Setters
+	public void setName(String name) {
+		this.name= name;
+	}
+	
+	public void setNumPeople(String numPeople) {
+		this.numPeople = numPeople;
+	}
+	
+	public void setRoom(String room) {
+		this.room = room;
+	}
+	
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	/* Calls methods to validate each parameter
