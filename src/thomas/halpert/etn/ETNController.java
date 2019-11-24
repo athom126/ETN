@@ -170,6 +170,8 @@ public class ETNController extends HttpServlet {
 				
 				// TO DO: Add the user to the database and send confirmation email
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
+				
+				session.invalidate(); // Invalidate session after confirmation has been sent
 			}
 		}
 	}
