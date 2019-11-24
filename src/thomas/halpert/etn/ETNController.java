@@ -126,43 +126,48 @@ public class ETNController extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			ValidatePayment vp = (ValidatePayment)session.getAttribute("payment");
 			if(vp == null) {
-				vp = new ValidatePayment(); // Create ValidatePayment object to validate request parameters
+				vp = new ValidatePayment(); // Create ValidatePayment (VP) object to validate request parameters
 			}
-			vp.setEmail(email);
+			vp.setEmail(email); // Set properties of VP object
 			vp.setCCHolder(email);
 			vp.setType(email);
 			vp.setNumber(email);
 			vp.setMonth(email);
 			vp.setYear(email);
-			session.setAttribute("payment", vp);
+			session.setAttribute("payment", vp); // Set VP object as session parameter
 			
 			// Validate the payment form parameters, and if there are errors, display checkout form again
 			if(!vp.validate(email, cardholder, ccType, ccNumber, expMonth, expYear)) {
 				this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
 			}
-			// If there are no errors, proceed to checkout
+			// If there are no errors, proceed to confirmation page
 			else {
 				
+				// Get or create a receipt
 				Receipt receipt = (Receipt)session.getAttribute("receipt");
 				if(receipt == null)
 				{
 					receipt = new Receipt();
 				}
+				
+				// Get reservation
 				ValidateReservation vr = (ValidateReservation)session.getAttribute("reservation"); 
 				if(vr == null)
 				{
 					//shouldn't be null here, report error?
 					session.setAttribute("errorMsg", "Unable to find reservation data in session");
 				}
+				// If reservation exists, set receipt properties
 				else
 				{
 					receipt.setName(vr.getName());
-					receipt.setEmail(email);
+					receipt.setEmail(vp.getEmail());
 					receipt.setNumPeople(vr.getNumPeople());
 					receipt.setRoom(vr.getRoom());
 					receipt.setDate(vr.getDate());
 					session.setAttribute("receipt", receipt);
 				}
+				
 				// TO DO: Add the user to the database and send confirmation email
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
 			}
