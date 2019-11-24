@@ -5,7 +5,7 @@
 function onRoomSelectionChange()
 {
 	var sel = document.getElementById("escapeRoom");
-	
+	//alert(sel.options[sel.selectedIndex].value);
 	if(sel.options[sel.selectedIndex].value == "Badham Preschool")
 	{
 		document.getElementById("reservationDateBP").style.display="";
@@ -18,7 +18,7 @@ function onRoomSelectionChange()
 		document.getElementById("reservationDateSR").style.display="";
 		document.getElementById("reservationDateJW").style.display="none";
 	}
-	else if(sel.options[sel.selectedIndex].value == "Jigsaws Warehouse")
+	else if(sel.options[sel.selectedIndex].value == "Jigsaw's Warehouse")
 	{
 		document.getElementById("reservationDateBP").style.display="none";
 		document.getElementById("reservationDateSR").style.display="none";

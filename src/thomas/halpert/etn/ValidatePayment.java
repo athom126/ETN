@@ -59,6 +59,31 @@ public class ValidatePayment {
 		return this.year;
 	}
 	
+	/* Setters */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setCCHolder(String ccHolder) {
+		this.ccHolder = ccHolder;
+	}
+	
+	public void setType(String ccType) {
+		this.ccType = ccType;
+	}
+	
+	public void setNumber(String ccNum) {
+		this.ccNum = ccNum;
+	}
+	
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	
+	public void setYear(String year) {
+		this.year = year;
+	}
+	
 	/* 	Calls methods to validate each parameter from the payment form
 	 *	Returns a boolean indicating whether the request parameters are valid
 	 *	Errors should be retrieved and displayed to use if invalid by calling getErrors() 

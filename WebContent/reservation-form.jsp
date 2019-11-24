@@ -9,7 +9,7 @@
 <%@ page import="java.text.*" %>
 <% 
 	session = request.getSession(false);
-	ValidateReservation reservation = (ValidateReservation)request.getAttribute("reservation");
+	ValidateReservation reservation = (ValidateReservation)session.getAttribute("reservation");
 	if(reservation == null) {
 		reservation = new ValidateReservation();
 	}
@@ -64,9 +64,9 @@
 	hostage(s)<br>
 	to escape 
 		<select name="escapeRoom" id="escapeRoom" title="Escape room choice" required onchange="onRoomSelectionChange()">
-			<option value="Badham Preschool" <%= reservation.getRoom().equals("badham preschool")?"selected":""%>>Badham Preschool</option>
-			<option value="The Strode Residence" <%= reservation.getRoom().equals("the strode residence")?"selected":""%>>The Strode Residence</option>
-			<option value="Jigsaw's Warehouse" <%= reservation.getRoom().equals("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
+			<option value="Badham Preschool" <%= reservation.getRoom().equalsIgnoreCase("badham preschool")?"selected":""%>>Badham Preschool</option>
+			<option value="The Strode Residence" <%= reservation.getRoom().equalsIgnoreCase("the strode residence")?"selected":""%>>The Strode Residence</option>
+			<option value="Jigsaw's Warehouse" <%= reservation.getRoom().equalsIgnoreCase("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
 		on 
 		<%
@@ -111,11 +111,22 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat day = new SimpleDateFormat("MM-dd-YYYY:HH");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
-				%>
-				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
-				<%
+				
+				if(selectedRoom.equalsIgnoreCase("Badham Preschool")) 
+				{
+					%>
+					<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
+					<%
+				}
+				else
+				{
+					//If this room wasn't previously selected, don't pre-select anything
+					%>
+					<option value=<%=day.format(date)%>><%=df.format(date)%></option>
+					<%
+				}
 			}
 			if(rs != null) {
 				rs.close();
@@ -134,11 +145,22 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat day = new SimpleDateFormat("MM-dd-YYYY:HH");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
-				%>
-				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
-				<%
+				
+				if(selectedRoom.equalsIgnoreCase("The Strode Residence")) 
+				{
+					%>
+					<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
+					<%
+				}
+				else
+				{
+					//If this room wasn't previously selected, don't pre-select anything
+					%>
+					<option value=<%=day.format(date)%>><%=df.format(date)%></option>
+					<%
+				}
 			}
 			if(rs != null) {
 				rs.close();
@@ -157,11 +179,22 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("MM/dd/YYYY");
+				DateFormat day = new SimpleDateFormat("MM-dd-YYYY:HH");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' hh:mm aa");
-				%>
-				<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
-				<%
+				
+				if(selectedRoom.equalsIgnoreCase("Jigsaw's Warehouse")) 
+				{
+					%>
+					<option value=<%=day.format(date)%> <%= reservation.getDate().equals(day.format(date))?"selected":""%>><%=df.format(date)%></option>
+					<%
+				}
+				else
+				{
+					//If this room wasn't previously selected, don't pre-select anything
+					%>
+					<option value=<%=day.format(date)%>><%=df.format(date)%></option>
+					<%
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

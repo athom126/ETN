@@ -3,7 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <% 
 	session = request.getSession(false);
-	//Receipt receipt = (Receipt)session.getAttribute("receipt");
+	Receipt receipt = (Receipt)session.getAttribute("receipt");
 %>
 <!DOCTYPE html>
 <HTML>
