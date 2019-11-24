@@ -168,10 +168,16 @@ public class ETNController extends HttpServlet {
 					session.setAttribute("receipt", receipt);
 				}
 				
-				// TO DO: Add the user to the database and send confirmation email
+				// TO DO: Add the user to the database
+				
+				// TO DO: Set the email column of the Reservation table to the email that the reservation is under
+				
+				// TO DO: Send confirmation email to user
+				
+				// Finally, display confirmation page after sending email to user and adding user to database
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
 				
-				session.invalidate(); // Invalidate session after confirmation has been sent
+				session.invalidate(); // Invalidate session after confirmation page is displayed
 			}
 		}
 	}
