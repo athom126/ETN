@@ -90,6 +90,11 @@ public class ValidatePayment {
 	 */
 	public boolean validate(String email, String name, String ccType, String ccNum, String ccExpMonth, String ccExpYear) {
 		
+		// If errors exist already, clear them before validating again to remove previous errors
+		if(!this.paymentErrors.isEmpty()) {
+			this.paymentErrors.clear();
+		}
+		
 		// Invoke methods to validate payment request parameters
 		this.validEmail(email);
 		this.validName(name);

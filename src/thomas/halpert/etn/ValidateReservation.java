@@ -66,6 +66,13 @@ public class ValidateReservation {
 	 * Errors should be retrieved and displayed if invalid by calling getErrors() 
 	 */
 	public boolean validate(String name, String numPeople, String room, String date) {
+		
+		// If errors exist already, clear them before validating again to remove previous errors
+		if(!this.errors.isEmpty()) {
+			this.errors.clear();
+		}
+				
+		
 		// Validate request parameters
 		this.validateName(name);
 		this.validateNumPeople(numPeople); 
