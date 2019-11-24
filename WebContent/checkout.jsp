@@ -41,24 +41,29 @@
 		<%	} %>	
 		</ul>
 		<%}%>
-	<form name="form" autocomplete="off" method="post" action="ETNController">
-				<h3>Payment Details</h3>
-						<label for="email">Email: </label>
-						<input type="email" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
+				<form name="form" autocomplete="off" method="post" action="ETNController">
+				<h3 style="margin-bottom: 20px">Payment Details</h3>
+						<label for="email" style="display:inline-block;float:left;align:right;margin-right:10px">Email: </label>
+						<input style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
+						type="email" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
 						<br>
-						<label for="cardholder">Name of Card Holder: </label>
-						<input type="text" name="cardholder" id="cardholder" maxLength="100" title="Name on credit card" value="<%=payment.getCCHolder()%>">
+						<label for="cardholder"  style="display:inline-block;float:left;align:right;margin-right:10px">Name of Card Holder: </label>
+						<input style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;"
+						 type="text" name="cardholder" id="cardholder" maxLength="100" title="Name on credit card" value="<%=payment.getCCHolder()%>">
 						<br>
-						<label for="creditCardType">Credit Card Type: </label>
+						<label for="creditCardType" style="display:inline-block;float:left;align:center;margin-right:10px">Credit Card Type: 
 						<input type="radio" value="Discover" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("Discover")?"checked":""%>>Discover&nbsp;
 						<input type="radio" value="MasterCard" name="creditCardType" id="creditCardType" title="Credit card company" <%= payment.getType().equals("MasterCard")?"checked":""%>>MasterCard&nbsp;
 						<input type="radio" value="Visa" name="creditCardType" id="creditCardType"  title="Credit card company" <%= payment.getType().equals("Visa")?"checked":""%>>VISA&nbsp;
+						</label>
 						<br>
-						<label for="creditcardnumber">Credit Card Number: </label>
-						<input type="text" name="creditCardNumber" id="creditCardNumber" maxLength="16" title="Credit card number" value="<%=payment.getNumber()%>">
+						<label for="creditcardnumber" style="display:inline-block;float:left;align:right;margin-right:10px">Credit Card Number: </label>
+						<input style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;"
+						 type="text" name="creditCardNumber" id="creditCardNumber" maxLength="16" title="Credit card number" value="<%=payment.getNumber()%>">
 						<br>
-						<label for="expiration">Expiration Date: </label>
-						<select name="expMonth" id="expMonth" title="Month of expiration">
+						<label for="expiration" style="display:inline-block;float:left;align:right;margin-right:10px">Expiration Date: </label>
+						<select name="expMonth" id="expMonth" title="Month of expiration" 
+						style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;">
 							<option value="January" <%= payment.getMonth().toLowerCase().equals("january")?"selected":""%>>January</option>
 							<option value="February" <%= payment.getMonth().toLowerCase().equals("february")?"selected":""%>>February</option>
 							<option value="March" <%= payment.getMonth().toLowerCase().equals("march")?"selected":""%>>March</option>
@@ -72,7 +77,8 @@
 							<option value="November" <%= payment.getMonth().toLowerCase().equals("november")?"selected":""%>>November</option>
 							<option value="December" <%= payment.getMonth().toLowerCase().equals("december")?"selected":""%>>December</option>
 						</select>&nbsp;
-						<select name="expYear" id="expYear" title="Year of expiration">
+						<select name="expYear" id="expYear" title="Year of expiration"
+						style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;">
 							<option value="2019" <%= payment.getYear().equals("2019")?"selected":""%>>2019</option>
 							<option value="2020" <%= payment.getYear().equals("2020")?"selected":""%>>2020</option>
 							<option value="2021" <%= payment.getYear().equals("2021")?"selected":""%>>2021</option>
