@@ -32,8 +32,8 @@
 			<input style="background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
 			type="text" name="username" id="username" title="Enter the email to look up your reservations"/><br><br>
 			<table>
-				<tr><th>Room</th><th>Date</th></tr>
-					<tr><td class="column1">room</td><td class="column2">date</td>
+				<tr><th>Escape Room</th><th>Date of Reservation</th></tr>
+					<tr><td>room</td><td>date</td>
 					<td class="td">
 						<form method="post" action="ETNController">
 							<input type="submit" name="cancel" value="Cancel" class="cancelButton">
