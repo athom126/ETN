@@ -37,8 +37,8 @@
 		<%=receipt.getUnparsedDate() %>,<br>
 		with <%=receipt.getNumPeople() %> hostages.<br><br></p>
 		A confirmation receipt has been sent to your email.<br>
-		If you choose to cancel your reservation, it must <br>
-		be done at least 24 hours before your reserved time.
+		If you choose to cancel your reservation, it must be done at least<br>
+		24 hours before your reserved time in order to be issued a refund.<br>
 </div>
 </body>
 </html>
