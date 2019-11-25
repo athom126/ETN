@@ -28,19 +28,28 @@
 	<div>
 		<form autocomplete="off" method="post" action="ETNController">
 			<h3>Cancel Reservations</h3>
-			To cancel enter your email address.
+			Enter the confirmation number of the <br>
+			reservation you would like to cancel.
 			<input style="background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
-			type="text" name="username" id="username" title="Enter the email to look up your reservations"/><br><br>
-			<table>
-				<tr><th>Escape Room</th><th>Date of Reservation</th></tr>
-					<tr><td>room</td><td>date</td>
-					<td class="td">
-						<form method="post" action="ETNController">
-							<input type="submit" name="cancel" value="Cancel" class="cancelButton">
-							<input type="hidden" name="reservationToCancel" value="date">
-						</form>
-					</td></tr>
-			</table>
+			type="text" name="confirmationNo" id="confirmationNo" title="The confirmation number of the reservation to be cancelled."/>
+			<input type="submit" name="cancel" value="Cancel" class="cancelButton"><br><br>
+			<% 
+				// Check if an attempt to cancel exists
+				if(request.getAttribute("cancellationResult") != null) {
+					boolean cancelResult = (boolean)request.getAttribute("cancellationResult");
+					// Success
+					if(cancelResult) { 
+			%>
+						<span class="cancel">Your reservation has been canceled and your<br>
+						refund will be processed within 2-3 business days.</span>
+					<% } 
+					// Failure
+				   	else {
+					   	String errorMessage = request.getParameter("cancellationError");
+					%>
+						<ul><li><span class="cancel"><%= errorMessage %></span></li></ul>
+				 <% } 
+				 } %>
 		</form>
 	</div>
 </body>
