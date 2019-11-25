@@ -30,13 +30,15 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 <div>
-		<%=receipt.getName()%>, <br>
+		<p><%=receipt.getName()%>, <br>
 		You have been confirmed to escape <br>
 		<%=receipt.getRoom() %>,<br>
 		on <br>
-		<%=receipt.getDate() %>,<br>
-		with <%=receipt.getNumPeople() %> hostages.<br><br>
-		A confirmation receipt has been sent to your email.
+		<%=receipt.getUnparsedDate() %>,<br>
+		with <%=receipt.getNumPeople() %> hostages.<br><br></p>
+		A confirmation receipt has been sent to your email.<br>
+		If you choose to cancel your reservation, it must <br>
+		be done at least 24 hours before your reserved time.
 </div>
 </body>
 </html>
