@@ -86,10 +86,11 @@ ol {
 	padding-left: 80px;
 }
 
+
 table, td, th {
 	text-align: center;
 	position: center;
-	border: 1px solid #cecece;
+	border: 1px solid #808080;
 	border-collapse: collapse;
 	margin-right: auto;
 	margin-left: auto;
@@ -98,7 +99,30 @@ table, td, th {
 	padding-top: 13px;
 	padding-bottom: 13px;
 	table-layout: fixed;
-	background: #000000;
+	font-family: 'Poppins', sans-serif;
+	font-size: 18px;
+}
+
+table {
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+}
+
+.td {
+	border: 0;
+}
+
+.column1 {
+	text-align: left;
+	font-family: 'Poppins', sans-serif;
+	font-size: 18px;
+}
+
+.column2 {
+	text-align: right;
+	font-family: 'Poppins', sans-serif;
+	font-size: 18px;
 }
 
 div {
@@ -247,6 +271,16 @@ input[type="checkbox"] {
 	font-size: 30px;
 	margin-right: 40px;
 	margin-left: 40px;
+}
+
+.cancelButton {
+	background-color: #121212;
+	padding: 8px;
+	border: 2px solid #121212;
+	color: #FFFFFF;
+	font-family: 'Special Elite', cursive;
+	font-size: 24px;
+	margin-left: 10px;
 }
 
 .disclaimerText {
