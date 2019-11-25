@@ -8,7 +8,9 @@ package thomas.halpert.etn;
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import java.text.*;
 
+import javax.mail.MessagingException;
 //import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -111,6 +113,33 @@ public class ETNController extends HttpServlet {
 		
 		// If a request to go back to the reservation form during the payment process is made, display the reservation form
 		else if(request.getParameter("Go Back") != null) {
+			
+			// Get request parameters from payment form
+			String email = request.getParameter("email");
+			String cardholder = request.getParameter("cardholder");
+			String ccType = request.getParameter("creditCardType");
+			String ccNumber = request.getParameter("creditCardNumber");
+			String expMonth = request.getParameter("expMonth");
+			String expYear = request.getParameter("expYear");
+			
+			HttpSession session = request.getSession(false);
+			ValidatePayment vp = (ValidatePayment)session.getAttribute("payment");
+			if(vp == null) {
+				vp = new ValidatePayment(); // Create ValidatePayment (VP) object to validate request parameters
+			}
+			vp.setEmail(email); // Set properties of VP object
+			vp.setCCHolder(cardholder);
+			if(ccType == null) {
+				//This parameter can return null in this path
+				vp.setType(""); 
+			} else {
+				vp.setType(ccType);
+			}
+			vp.setNumber(ccNumber);
+			vp.setMonth(expMonth);
+			vp.setYear(expYear);
+			session.setAttribute("payment", vp); // Set VP object as session parameter
+						
 			this.getServletContext().getRequestDispatcher("/reservation-form.jsp").forward(request, response); 
 		}
 		
@@ -123,17 +152,18 @@ public class ETNController extends HttpServlet {
 			String ccNumber = request.getParameter("creditCardNumber");
 			String expMonth = request.getParameter("expMonth");
 			String expYear = request.getParameter("expYear");
+			
 			HttpSession session = request.getSession(false);
 			ValidatePayment vp = (ValidatePayment)session.getAttribute("payment");
 			if(vp == null) {
 				vp = new ValidatePayment(); // Create ValidatePayment (VP) object to validate request parameters
 			}
 			vp.setEmail(email); // Set properties of VP object
-			vp.setCCHolder(email);
-			vp.setType(email);
-			vp.setNumber(email);
-			vp.setMonth(email);
-			vp.setYear(email);
+			vp.setCCHolder(cardholder);
+			vp.setType(ccType);
+			vp.setNumber(ccNumber);
+			vp.setMonth(expMonth);
+			vp.setYear(expYear);
 			session.setAttribute("payment", vp); // Set VP object as session parameter
 			
 			// Validate the payment form parameters, and if there are errors, display checkout form again
@@ -173,6 +203,17 @@ public class ETNController extends HttpServlet {
 				// TO DO: Set the email column of the Reservation table to the email that the reservation is under
 				
 				// TO DO: Send confirmation email to user
+				String fromAddr = "noys.noreply@gmail.com";
+				String toAddr = receipt.getEmail();
+				String subj = "Nightmare on Your Street Reservation Confirmation";
+				String body = "Dear " + receipt.getName() + ",\n\n" 
+						+ "You are confirmed to be bringing " + receipt.getNumPeople() + " hostage(s) to " + receipt.getRoom() 
+						+ " on " + receipt.getDate() + ".";
+				try {
+					MailHelper.sendMail(toAddr, fromAddr, subj, body);
+				} catch (MessagingException e) {
+					request.getSession().setAttribute("errorMsg", "ERROR: Unable to send mail. " + e.getMessage());
+				}
 				
 				// Finally, display confirmation page after sending email to user and adding user to database
 				this.getServletContext().getRequestDispatcher("/confirmation.jsp").forward(request, response); 
