@@ -71,8 +71,6 @@ public class ETNController extends HttpServlet {
 		else if(room.equalsIgnoreCase("Jigsaw's Warehouse")) {
 			date = request.getParameter("reservationDateJW");
 		}
-		System.out.println("Room Selected: " + room);
-		System.out.println("BP: " + request.getParameter("reservationDateBP") + ", SR: " + request.getParameter("reservationDateSR") + ", JW: " + request.getParameter("reservationDateJW"));
 		
 		// Use for testing
 //		String name = "Laur!e Str0de";
