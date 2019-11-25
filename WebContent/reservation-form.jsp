@@ -203,11 +203,11 @@
 		%>
 		</select>.
 		<h3>Disclaimer</h3>
-		<span class="disclaimerText">By submitting this form, I acknowledge that...<br>
+		<p class="disclaimerText">By submitting this form, I acknowledge that...<br>
 		<input type="checkbox" value="agreement1" required/> <label>I understand that on the day of my reservation<br>
 		consent forms will need to be filled out by every hostage.</label><br>
 		<input type="checkbox" value="agreement2" required/> <label>I understand that if I cancel the reservation within 24 hours<br>
-		of the scheduled reservation I will not be refunded.</label></span><p>
+		of the scheduled reservation I will not be refunded.</label><p>
 		<input type="submit" id="Reserve" name="Reserve" value="Reserve" class="button"/>
 	</form>
 </div>

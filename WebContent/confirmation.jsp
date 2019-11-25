@@ -10,7 +10,7 @@
 	<head>
 		<title>Nightmare On Your Street</title>
 		<link href="etn-styles.css" rel="stylesheet" type ="text/css"/>
-		<link href="https://fonts.googleapis.com/css?family=Poppins|Indie+Flower|Special+Elite|Nosifer&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins|Indie+Flower|Special+Elite|Homemade+Apple|Nosifer&display=swap" rel="stylesheet">
 </head>
 
 <body oncontextmenu="return false;" class="">
