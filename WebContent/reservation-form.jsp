@@ -19,7 +19,7 @@
 	<head>
 		<title>Nightmare On Your Street</title>
 		<link href="etn-styles.css" rel="stylesheet" type ="text/css"/>
-		<link href="https://fonts.googleapis.com/css?family=Poppins|Indie+Flower|Special+Elite|Nosifer&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins|Indie+Flower|Special+Elite|Nosifer|Homemade+Apple&display=swap" rel="stylesheet">
 		<script src="etn.js"></script>
 </head>
 
@@ -68,7 +68,7 @@
 			<option value="The Strode Residence" <%= reservation.getRoom().equalsIgnoreCase("the strode residence")?"selected":""%>>The Strode Residence</option>
 			<option value="Jigsaw's Warehouse" <%= reservation.getRoom().equalsIgnoreCase("jigsaw's warehouse")?"selected":""%>>Jigsaw's Warehouse</option>
 		</select>,<br>
-		on 
+		on <br>
 		<%
 		String driverName = "com.mysql.cj.jdbc.Driver";
 		String connectionUrl = "jdbc:mysql://sql9.freemysqlhosting.net:3306";
@@ -130,8 +130,7 @@
 				rs.close();
 			}
 		%>
-		</select>
-		<select name="reservationDateSR" id="reservationDateSR" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("The Strode Residence")?"":"style=\"display:none\""%>>
+		</select><select name="reservationDateSR" id="reservationDateSR" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("The Strode Residence")?"":"style=\"display:none\""%>>
 		<%
 			
 			ps.setString(1, "The Strode Residence");
@@ -163,8 +162,7 @@
 				rs.close();
 			}
 		%>
-		</select>
-		<select name="reservationDateJW" id="reservationDateJW" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("Jigsaw's Warehouse")?"":"style=\"display:none\""%>>
+		</select><select name="reservationDateJW" id="reservationDateJW" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("Jigsaw's Warehouse")?"":"style=\"display:none\""%>>
 		<%
 			
 			ps.setString(1, "Jigsaws Warehouse");
