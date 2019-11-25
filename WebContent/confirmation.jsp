@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, java.io.*, thomas.halpert.etn.*" %>
+<%@ page import="java.util.*, java.io.*, thomas.halpert.etn.*, thomas.halpert.etn.Receipt" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <% 
@@ -30,12 +30,13 @@
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 <div>
-		[name], <br>
+		<%=receipt.getName()%>, <br>
 		You have been confirmed to escape <br>
-		[escape room name],<br>
+		<%=receipt.getRoom() %>,<br>
 		on <br>
-		[date and time],<br>
-		with [number of people] hostages.
+		<%=receipt.getDate() %>,<br>
+		with <%=receipt.getNumPeople() %> hostages.<br><br>
+		A confirmation receipt has been sent to your email.
 </div>
 </body>
 </html>
