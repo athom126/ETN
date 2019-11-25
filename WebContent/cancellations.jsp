@@ -37,7 +37,7 @@
 					<td class="td">
 						<form method="post" action="ETNController">
 							<input type="submit" name="cancel" value="Cancel" class="cancelButton">
-							<input type="hidden" name="courseToRemove" value="date">
+							<input type="hidden" name="reservationToCancel" value="date">
 						</form>
 					</td></tr>
 			</table>
