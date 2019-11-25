@@ -66,6 +66,12 @@ public class Receipt {
 
 	public String getDate()
 	{
+		String[] words = date.split(",");
+		return words[0] + ", " + words[1] + " " + words[2] + ", " + words[3] + " at " + words[4] + " " + words[5];
+	}
+	
+	public String getUnparsedDate()
+	{
 		return this.date;
 	}
 
