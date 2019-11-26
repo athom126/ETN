@@ -1,6 +1,12 @@
 <%@ page import="java.util.*, java.io.*, thomas.halpert.etn.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.Statement"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.PreparedStatement"%>    
+<%@ page import="java.text.*" %>
 <!DOCTYPE html>
 <HTML>
 	<head>
@@ -34,38 +40,123 @@
 		<button class="toggleStrode" onclick="showStrode()" title="Click to display the leaderboard">The Strode Residence</button>
 		<div class="leaderboard" id="strodeTbl">
 			<br>
+			<%
+				String driverName = "com.mysql.cj.jdbc.Driver";
+				String connectionUrl = "jdbc:mysql://sql9.freemysqlhosting.net:3306";
+				String dbName = "/sql9310910";
+				String userId = "sql9310910";
+				String password = "8M4rA4YdVk";
+				
+				try {
+					Class.forName(driverName);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				Connection conn = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;
+				try {
+					conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
+			%>
 			<table>
 				<tr><th>Escape Time (minutes)</th><th>Name</th></tr>
-				<tr><td class="column1">r1c1</td><td class="column2">r1c2</td></tr>
-				<tr><td class="column1">r2c1</td><td class="column2">r2c2</td></tr>
-				<tr><td class="column1">r3c1</td><td class="column2">r3c2</td></tr>
-				<tr><td class="column1">r4c1</td><td class="column2">r4c2</td></tr>
+			<%
+					String query = "SELECT TIME, NAME FROM SAMPLE ORDER BY TIME ASC;";
+					ps = conn.prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						int time = rs.getInt("TIME");
+						String name = rs.getString("NAME");
+			%>
+				<tr><td class="column1"><%=time%></td><td class="column2"><%=name%></td></tr>
+			<%		
+					}
+				}
+				finally {
+					conn.close();
+					ps.close();
+					rs.close();
+				}
+			%>
 			</table>
 		</div>
 		<hr/>
 			
 		<button class="toggleBadham" onclick="showBadham()" title="Click to display the leaderboard">Badham Preschool</button>
-		<div class="leaderboard" id="badhamTbl" style="display: none">
-			<br>
+		<div class="leaderboard" id="badhamTbl" style="display: none"><br>
+<%
+				try {
+					Class.forName(driverName);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				conn = null;
+				ps = null;
+				rs = null;
+				try {
+					conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
+			%>
 			<table>
 				<tr><th>Escape Time (minutes)</th><th>Name</th></tr>
-				<tr><td class="column1">r1c1</td><td class="column2">r1c2</td></tr>
-				<tr><td class="column1">r2c1</td><td class="column2">r2c2</td></tr>
-				<tr><td class="column1">r3c1</td><td class="column2">r3c2</td></tr>
-				<tr><td class="column1">r4c1</td><td class="column2">r4c2</td></tr>
+			<%
+					String query = "SELECT TIME, NAME FROM BADHAM ORDER BY TIME ASC;";
+					ps = conn.prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						int time = rs.getInt("TIME");
+						String name = rs.getString("NAME");
+			%>
+				<tr><td class="column1"><%=time%></td><td class="column2"><%=name%></td></tr>
+			<%		
+					}
+				}
+				finally {
+					conn.close();
+					ps.close();
+					rs.close();
+				}
+			%>
 			</table>
 		</div>
 		<hr/>
 			
 		<button class="toggleJigsaw" onclick="showJigsaw()" title="Click to display the leaderboard">Jigsaw's Warehouse</button>
-		<div class="leaderboard" id="jigsawTbl" style="display: none">
-			<br>
+		<div class="leaderboard" id="jigsawTbl" style="display: none"><br>
+			<%
+				try {
+					Class.forName(driverName);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				conn = null;
+				ps = null;
+				rs = null;
+				try {
+					conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
+			%>
 			<table>
 				<tr><th>Escape Time (minutes)</th><th>Name</th></tr>
-				<tr><td class="column1">r1c1</td><td class="column2">r1c2</td></tr>
-				<tr><td class="column1">r2c1</td><td class="column2">r2c2</td></tr>
-				<tr><td class="column1">r3c1</td><td class="column2">r3c2</td></tr>
-				<tr><td class="column1">r4c1</td><td class="column2">r4c2</td></tr>
+			<%
+					String query = "SELECT TIME, NAME FROM JIGSAW ORDER BY TIME ASC;";
+					ps = conn.prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						int time = rs.getInt("TIME");
+						String name = rs.getString("NAME");
+			%>
+				<tr><td class="column1"><%=time%></td><td class="column2"><%=name%></td></tr>
+			<%		
+					}
+				}
+				finally {
+					conn.close();
+					ps.close();
+					rs.close();
+				}
+			%>
 			</table>
 		</div>	
 		<br><br>
