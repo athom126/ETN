@@ -25,3 +25,33 @@ function onRoomSelectionChange()
 		document.getElementById("reservationDateJW").style.display="";
 	}
 }
+
+function showStrode() {
+	  var x = document.getElementById("strodeTbl");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } 
+	  else {
+	    x.style.display = "none";
+	  }
+}
+
+function showBadham() {
+	  var x = document.getElementById("badhamTbl");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } 
+	  else {
+	    x.style.display = "none";
+	  }
+}
+
+function showJigsaw() {
+	  var x = document.getElementById("jigsawTbl");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } 
+	  else {
+	    x.style.display = "none";
+	  }
+}
