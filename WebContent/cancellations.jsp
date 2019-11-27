@@ -32,7 +32,7 @@
 			reservation you would like to cancel.
 			<input style="background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
 			type="text" name="confirmationNo" id="confirmationNo" title="The confirmation number of the reservation to be cancelled."/>
-			<input type="submit" name="Cancel" value="Cancel" class="cancelButton"><br><br>
+			<input type="submit" name="Cancel" value="Cancel" class="cancelButton"><br>
 			<% 
 				// Check if an attempt to cancel exists
 				if(request.getAttribute("cancellationResult") != null) {
@@ -40,7 +40,7 @@
 					// Success
 					if(cancelResult) { 
 			%>
-						<span class="cancel">Your reservation has been canceled and your<br>
+						<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px">Your reservation has been canceled and your<br>
 						refund will be processed within 2-3 business days.</span>
 					<% } 
 					// Failure
