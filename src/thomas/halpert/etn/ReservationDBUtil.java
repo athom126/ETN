@@ -71,6 +71,11 @@ public class ReservationDBUtil {
 		}
 	}
 	
+	public static void holdRoom(String dateString, String room)
+	{
+		
+	}
+	
 	//This dateString string must be of the format "yyyy-MM-dd HH:00:00"
 	public static boolean setEmail(String email, String dateString, String room)
 	{
@@ -106,13 +111,13 @@ public class ReservationDBUtil {
 	}
 	
 	//This dateString string must be of the format "yyyy-MM-dd HH:00:00"
-	public static boolean addConfirmationNum(String dateString, String room, String confirmationNum)
+	public static boolean confirmReservation(String dateString, String room, String confirmationNum, String email)
 	{
 		Connection conn = getConnection();
 		PreparedStatement ps = null, ps2 = null;
 		ResultSet rs = null;
 
-		String query = "UPDATE RESERVATION SET Confirmation_Num = ? WHERE Date = ? and Room = ?";
+		String query = "UPDATE RESERVATION SET Confirmation_Num = ?, Status = 'reserved', Email = ? WHERE Date = ? AND Room = ?";
 		String checkQuery = "SELECT * FROM RESERVATION WHERE Confirmation_Num = ?";
 
 		if(conn != null) {
@@ -131,8 +136,9 @@ public class ReservationDBUtil {
 				{
 					ps = conn.prepareStatement(query);
 					ps.setString(1, confirmationNum);
-					ps.setString(2, dateString);
-					ps.setString(3, room);
+					ps.setString(2, email);
+					ps.setString(3, dateString);
+					ps.setString(4, room);
 					int numRowsUpdated = ps.executeUpdate();
 					System.out.println("Updated " + numRowsUpdated + " rows for confirmationNum with room " + room + " and date = " + dateString);
 					if(numRowsUpdated == 1) {
@@ -162,15 +168,13 @@ public class ReservationDBUtil {
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "UPDATE RESERVATION SET Email = NULL AND Status = ? WHERE Confirmation_Num = ?";
+		String query = "UPDATE RESERVATION SET Email = NULL, Status = 'open', Confirmation_Num = NULL WHERE Confirmation_Num = ?";
 		
 		if(conn != null) {
 			try {
 				ps = conn.prepareStatement(query);
-				ps.setString(1, "open");
-				ps.setString(2, confirmationNum);
+				ps.setString(1, confirmationNum);
 				int numRowsUpdated = ps.executeUpdate();
-				System.out.println("Cancelled " + numRowsUpdated + " reservations");
 				if(numRowsUpdated == 1) {
 					return true;
 				} else {
