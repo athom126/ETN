@@ -216,7 +216,7 @@ public class ETNController extends HttpServlet {
 				if(date != null) {
 					// "EEEEE-MMMM-dd-YYYY-h-aa" -> "yyyy-MM-dd HH:00:00"
 					String dateString = dbSdf.format(date);
-					ReservationDBUtil.setEmail(receipt.getEmail(), dateString, receipt.getRoom());
+					//ReservationDBUtil.setEmail(receipt.getEmail(), dateString, receipt.getRoom());
 					
 					// Generate a unique confirmation number
 					boolean uniqueNumFound = false;
@@ -224,12 +224,10 @@ public class ETNController extends HttpServlet {
 					while(!uniqueNumFound) {
 						confirmationNum = random.nextInt(89999999) + 10000000;
 						// addConfirmationNum returns false is number already exists
-						if(ReservationDBUtil.addConfirmationNum(dateString, receipt.getRoom(), Integer.toString(confirmationNum)))
+						if(ReservationDBUtil.confirmReservation(dateString, receipt.getRoom(), Integer.toString(confirmationNum), receipt.getEmail()));
 						{
-							System.out.println("Found unique conf num " + confirmationNum);
 							uniqueNumFound = true;
 						}
-						System.out.println("Trying to add confirmation " + confirmationNum + " to table");
 						if(numTries++ > 5) {
 							uniqueNumFound = true;
 							//break while debugging
@@ -263,7 +261,6 @@ public class ETNController extends HttpServlet {
 		else if(request.getParameter("Cancel") != null)
 		{
 			String confirmationNum = request.getParameter("confirmationNo");
-			System.out.println("Attempting to cancel reservationNum " + confirmationNum);
 			if(ReservationDBUtil.cancelReservation(confirmationNum))
 			{
 				//Cancellation was successful
