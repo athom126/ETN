@@ -99,7 +99,18 @@ public class ETNController extends HttpServlet {
 		}
 		// If reservation form contains no errors, proceed to checkout
 		else {
-			// TO DO: Create Receipt class and object and set the collected parameters
+			SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+			SimpleDateFormat dbSdf = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+			Date date1 = null;
+			try {
+				date1 = sdf.parse(date);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String dateString = dbSdf.format(date1);
+			// Put a hold on currently selected room while payment is processed
+			ReservationDBUtil.holdRoom(dateString, room);
 			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); // Display checkout page
 		}
 	}
@@ -113,6 +124,22 @@ public class ETNController extends HttpServlet {
 		
 		// If a request to go back to the reservation form during the payment process is made, display the reservation form
 		else if(request.getParameter("Go Back") != null) {
+			HttpSession session = request.getSession(false);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+			SimpleDateFormat dbSdf = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+			ValidateReservation res = (ValidateReservation) session.getAttribute("reservation");
+			Date date1 = null;
+			try {
+				date1 = sdf.parse(res.getDate());
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String dateString = dbSdf.format(date1);
+			
+			// Release hold on currently selected room
+			ReservationDBUtil.removeHold(dateString, res.getRoom());
 			
 			// Get request parameters from payment form
 			String email = request.getParameter("email");
@@ -122,7 +149,6 @@ public class ETNController extends HttpServlet {
 			String expMonth = request.getParameter("expMonth");
 			String expYear = request.getParameter("expYear");
 			
-			HttpSession session = request.getSession(false);
 			ValidatePayment vp = (ValidatePayment)session.getAttribute("payment");
 			if(vp == null) {
 				vp = new ValidatePayment(); // Create ValidatePayment (VP) object to validate request parameters
@@ -213,10 +239,9 @@ public class ETNController extends HttpServlet {
 				int confirmationNum = 10000000; //minimum confirmation number
 				Random random = new Random();
 				
-				if(date != null) {
+				if(date != null) {	
 					// "EEEEE-MMMM-dd-YYYY-h-aa" -> "yyyy-MM-dd HH:00:00"
 					String dateString = dbSdf.format(date);
-					ReservationDBUtil.setEmail(receipt.getEmail(), dateString, receipt.getRoom());
 					
 					// Generate a unique confirmation number
 					boolean uniqueNumFound = false;
@@ -224,12 +249,10 @@ public class ETNController extends HttpServlet {
 					while(!uniqueNumFound) {
 						confirmationNum = random.nextInt(89999999) + 10000000;
 						// addConfirmationNum returns false is number already exists
-						if(ReservationDBUtil.addConfirmationNum(dateString, receipt.getRoom(), Integer.toString(confirmationNum)))
+						if(ReservationDBUtil.confirmReservation(dateString, receipt.getRoom(), Integer.toString(confirmationNum), receipt.getEmail()));
 						{
-							System.out.println("Found unique conf num " + confirmationNum);
 							uniqueNumFound = true;
 						}
-						System.out.println("Trying to add confirmation " + confirmationNum + " to table");
 						if(numTries++ > 5) {
 							uniqueNumFound = true;
 							//break while debugging
@@ -263,10 +286,17 @@ public class ETNController extends HttpServlet {
 		else if(request.getParameter("Cancel") != null) 
 		{
 			String confirmationNum = request.getParameter("confirmationNo");
+<<<<<<< HEAD
 			System.out.println("Attempting to cancel reservationNum " + confirmationNum);
 			if(confirmationNum == "" || confirmationNum == null) {
 				request.setAttribute("cancellationResult", false);
 				request.setAttribute("error", "Please enter a confirmation number.");
+=======
+			if(ReservationDBUtil.cancelReservation(confirmationNum))
+			{
+				//Cancellation was successful
+				request.setAttribute("cancellationResult", true);
+>>>>>>> de899d73ba905acb2bb81fcb00fb6ca01944e1e0
 			}
 			else if(confirmationNum.length() != 8) {
 				request.setAttribute("cancellationResult", false);
