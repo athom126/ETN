@@ -112,7 +112,7 @@
 			{
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
-				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				//date.setHours(date.getHours()-1); //To account for time offset with DB.
 				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				
@@ -144,7 +144,7 @@
 			{
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
-				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				//date.setHours(date.getHours()-1); //To account for time offset with DB.
 				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				
@@ -176,7 +176,7 @@
 			{
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
-				date.setHours(date.getHours()-1); //To account for time offset with DB.
+				//date.setHours(date.getHours()-1); //To account for time offset with DB.
 				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
 				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				

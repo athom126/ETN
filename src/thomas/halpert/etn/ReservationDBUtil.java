@@ -123,6 +123,7 @@ public class ReservationDBUtil {
 
 				if(rs.next()) 
 				{
+					System.out.println("confirmation num alrdy exists");
 					//Confirmation number already exists
 					return false;
 				}
@@ -133,7 +134,7 @@ public class ReservationDBUtil {
 					ps.setString(2, dateString);
 					ps.setString(3, room);
 					int numRowsUpdated = ps.executeUpdate();
-					//System.out.println("Updated " + numRowsUpdated + " rows for confirmationNum");
+					System.out.println("Updated " + numRowsUpdated + " rows for confirmationNum with room " + room + " and date = " + dateString);
 					if(numRowsUpdated == 1) {
 						return true;
 					} else {
