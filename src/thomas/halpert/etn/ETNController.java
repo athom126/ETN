@@ -286,25 +286,23 @@ public class ETNController extends HttpServlet {
 		else if(request.getParameter("Cancel") != null) 
 		{
 			String confirmationNum = request.getParameter("confirmationNo");
-<<<<<<< HEAD
-			System.out.println("Attempting to cancel reservationNum " + confirmationNum);
+			
+			// Check if empty or null
 			if(confirmationNum == "" || confirmationNum == null) {
 				request.setAttribute("cancellationResult", false);
 				request.setAttribute("error", "Please enter a confirmation number.");
-=======
-			if(ReservationDBUtil.cancelReservation(confirmationNum))
-			{
-				//Cancellation was successful
-				request.setAttribute("cancellationResult", true);
->>>>>>> de899d73ba905acb2bb81fcb00fb6ca01944e1e0
 			}
+			// Check length is 8
 			else if(confirmationNum.length() != 8) {
 				request.setAttribute("cancellationResult", false);
 				request.setAttribute("error", "Invalid confirmation number entered.");
 			}
+			// Check if numeric
 			else if(confirmationNum.length() == 8) {
 				try {
-					Integer.parseInt(confirmationNum);
+					Integer.parseInt(confirmationNum); // Try parsing
+					System.out.println("Attempting to cancel reservationNum " + confirmationNum);
+					// Try canceling in the database
 					if(ReservationDBUtil.cancelReservation(confirmationNum))
 					{
 						//Cancellation was successful
@@ -325,5 +323,4 @@ public class ETNController extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/cancellations.jsp").forward(request, response);
 		}
 	}
-
 }
