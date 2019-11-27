@@ -45,9 +45,9 @@
 					<% } 
 					// Failure
 				   	else {
-					   	String errorMessage = request.getParameter("cancellationError");
+					   	String error = (String)request.getAttribute("error");
 					%>
-						<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px"><%= errorMessage %></span>
+						<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px"><%= error %></span>
 				 <% } 
 				 } %>
 		</form>
