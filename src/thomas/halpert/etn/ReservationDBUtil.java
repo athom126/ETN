@@ -71,9 +71,66 @@ public class ReservationDBUtil {
 		}
 	}
 	
-	public static void holdRoom(String dateString, String room)
+	public static boolean holdRoom(String dateString, String room)
 	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
 		
+		String query = "UPDATE RESERVATION SET Status = 'on hold' WHERE Date = ? and Room = ?";
+		if(conn != null) {
+			try {
+				ps = conn.prepareStatement(query);
+				ps.setString(1, dateString);
+				ps.setString(2, room);
+				int numRowsUpdated = ps.executeUpdate();
+				if(numRowsUpdated == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+			}
+		}
+		else
+		{
+			//error
+			return false;
+		}
+	}
+	
+	public static boolean removeHold(String dateString, String room)
+	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
+		
+		String query = "UPDATE RESERVATION SET Status = 'open' WHERE Date = ? and Room = ?";
+		if(conn != null) {
+			try {
+				ps = conn.prepareStatement(query);
+				ps.setString(1, dateString);
+				ps.setString(2, room);
+				int numRowsUpdated = ps.executeUpdate();
+				if(numRowsUpdated == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+			}
+		}
+		else
+		{
+			//error
+			return false;
+		}
 	}
 	
 	//This dateString string must be of the format "yyyy-MM-dd HH:00:00"
