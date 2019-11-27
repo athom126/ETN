@@ -260,19 +260,37 @@ public class ETNController extends HttpServlet {
 				session.invalidate(); // Invalidate session after confirmation page is displayed
 			}
 		}
-		else if(request.getParameter("Cancel") != null)
+		else if(request.getParameter("Cancel") != null) 
 		{
 			String confirmationNum = request.getParameter("confirmationNo");
 			System.out.println("Attempting to cancel reservationNum " + confirmationNum);
-			if(ReservationDBUtil.cancelReservation(confirmationNum))
-			{
-				//Cancellation was successful
-				request.setAttribute("cancellationResult", true);
-			}
-			else
-			{
-				//Cancellation failed
+			if(confirmationNum == "" || confirmationNum == null) {
 				request.setAttribute("cancellationResult", false);
+				request.setAttribute("error", "Please enter a confirmation number.");
+			}
+			else if(confirmationNum.length() != 8) {
+				request.setAttribute("cancellationResult", false);
+				request.setAttribute("error", "Invalid confirmation number entered.");
+			}
+			else if(confirmationNum.length() == 8) {
+				try {
+					Integer.parseInt(confirmationNum);
+					if(ReservationDBUtil.cancelReservation(confirmationNum))
+					{
+						//Cancellation was successful
+						request.setAttribute("cancellationResult", true);
+					}
+					else
+					{
+						//Cancellation failed
+						request.setAttribute("cancellationResult", false);
+						request.setAttribute("error", "A reservation with the entered confirmation number does not exist.");
+					}
+				}
+				catch(NumberFormatException nfe) {
+					request.setAttribute("cancellationResult", false);
+					request.setAttribute("error", "Invalid confirmation number entered.");
+				}
 			}
 			this.getServletContext().getRequestDispatcher("/cancellations.jsp").forward(request, response);
 		}
