@@ -226,8 +226,10 @@ public class ETNController extends HttpServlet {
 						// addConfirmationNum returns false is number already exists
 						if(ReservationDBUtil.addConfirmationNum(dateString, receipt.getRoom(), Integer.toString(confirmationNum)))
 						{
+							System.out.println("Found unique conf num " + confirmationNum);
 							uniqueNumFound = true;
 						}
+						System.out.println("Trying to add confirmation " + confirmationNum + " to table");
 						if(numTries++ > 5) {
 							uniqueNumFound = true;
 							//break while debugging
@@ -261,6 +263,7 @@ public class ETNController extends HttpServlet {
 		else if(request.getParameter("Cancel") != null)
 		{
 			String confirmationNum = request.getParameter("confirmationNo");
+			System.out.println("Attempting to cancel reservationNum " + confirmationNum);
 			if(ReservationDBUtil.cancelReservation(confirmationNum))
 			{
 				//Cancellation was successful
