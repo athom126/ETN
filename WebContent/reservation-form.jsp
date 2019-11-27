@@ -6,6 +6,8 @@
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.PreparedStatement"%>    
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.text.*" %>
 <% 
 	session = request.getSession(false);
@@ -93,15 +95,17 @@
 		}
 		try{
 			conn = DriverManager.getConnection(connectionUrl+dbName, userId, password);
-			String query = "SELECT * FROM RESERVATION WHERE (Room = ? AND Status = 'open')";
+			String query = "SELECT * FROM RESERVATION WHERE Room = ? AND Status = 'open' AND Date > ?";
 			//ToDo: if current session has a room on hold, 
 			ps = conn.prepareStatement(query);
 			
 		%>
 		<select name="reservationDateBP" id="reservationDateBP" title="Desired reservation date" required <%= selectedRoom.equalsIgnoreCase("Badham Preschool")?"":"style=\"display:none\""%>>
 		<%
-			
+		    LocalDateTime today = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			ps.setString(1, "Badham Preschool");
+			ps.setString(2, today.format(formatter));
 			rs = ps.executeQuery();
 			
 			while(rs.next())
@@ -109,8 +113,8 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("EEEEE,MMMM,dd,YYYY,h,aa");
-				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' h:mm aa");
+				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				
 				if(selectedRoom.equalsIgnoreCase("Badham Preschool")) 
 				{
@@ -141,8 +145,8 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("EEEEE,MMMM,dd,YYYY,h,aa", Locale.US);
-				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' h:mm aa", Locale.US);
+				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				
 				if(selectedRoom.equalsIgnoreCase("The Strode Residence")) 
 				{
@@ -173,8 +177,8 @@
 				java.sql.Timestamp ts = rs.getTimestamp("date");
 				java.util.Date date = ts;
 				date.setHours(date.getHours()-1); //To account for time offset with DB.
-				DateFormat day = new SimpleDateFormat("EEEEE,MMMM,dd,YYYY,h,aa", Locale.US);
-				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, YYYY 'at' h:mm aa", Locale.US);
+				DateFormat day = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+				DateFormat df = new SimpleDateFormat("EEEEE, MMMM dd, yyyy 'at' h:mm aa");
 				
 				if(selectedRoom.equalsIgnoreCase("Jigsaw's Warehouse")) 
 				{

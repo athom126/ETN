@@ -2,11 +2,12 @@ package thomas.halpert.etn;
 
 public class Receipt {
 	
-	String name; 		// Stores name reservation is under
-	String email;  		// Stores email associated with user
-	String numPeople; 	// Store number of participants
-	String room; 		// Stores selected room
-	String date; 		// Store date of reservation
+	String name; 			// Stores name reservation is under
+	String email;  			// Stores email associated with user
+	String numPeople; 		// Store number of participants
+	String room; 			// Stores selected room
+	String date; 			// Store date of reservation
+	String confirmationNum; //Store confirmation number of reservation
 	
 	// Default constructor
 	public Receipt() {
@@ -15,6 +16,7 @@ public class Receipt {
 		this.numPeople = "";
 		this.room = "";
 		this.date = "";
+		this.confirmationNum = "";
 	}
 	
 	//Setters
@@ -43,6 +45,11 @@ public class Receipt {
 		this.date = date;
 	}
 	
+	public void setConfirmationNum(String confNum)
+	{
+		this.confirmationNum = confNum;
+	}
+	
 	//Getters
 	public String getName()
 	{
@@ -63,10 +70,15 @@ public class Receipt {
 	{
 		return this.room;
 	}
+	
+	public String getConfirmationNum()
+	{
+		return this.confirmationNum;
+	}
 
 	public String getDate()
 	{
-		String[] words = date.split(",");
+		String[] words = date.split("-");
 		return words[0] + ", " + words[1] + " " + words[2] + ", " + words[3] + " at " + words[4] + " " + words[5];
 	}
 	
