@@ -7,11 +7,11 @@ package thomas.halpert.etn;
 
 import java.io.*;
 import java.util.*;
-import java.lang.*;
 import java.text.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.mail.MessagingException;
-//import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.Session;
+import thomas.halpert.etn.ReservationDBUtil;
 
 @WebServlet("/ETNController")
 public class ETNController extends HttpServlet {
@@ -195,20 +195,57 @@ public class ETNController extends HttpServlet {
 					receipt.setNumPeople(vr.getNumPeople());
 					receipt.setRoom(vr.getRoom());
 					receipt.setDate(vr.getDate());
-					session.setAttribute("receipt", receipt);
 				}
 				
 				// TO DO: Add the user to the database
 				
-				// TO DO: Set the email column of the Reservation table to the email that the reservation is under
+				// Set the email column of the Reservation table to the email that the reservation is under
+				SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+				SimpleDateFormat dbSdf = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+				Date date = null;
+				try {
+					date = sdf.parse(receipt.getUnparsedDate());
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				int confirmationNum = 10000000; //minimum confirmation number
+				Random random = new Random();
 				
-				// TO DO: Send confirmation email to user
+				if(date != null) {
+					// "EEEEE-MMMM-dd-YYYY-h-aa" -> "yyyy-MM-dd HH:00:00"
+					String dateString = dbSdf.format(date);
+					ReservationDBUtil.setEmail(receipt.getEmail(), dateString, receipt.getRoom());
+					
+					// Generate a unique confirmation number
+					boolean uniqueNumFound = false;
+					int numTries = 1;
+					while(!uniqueNumFound) {
+						confirmationNum = random.nextInt(89999999) + 10000000;
+						// addConfirmationNum returns false is number already exists
+						if(ReservationDBUtil.addConfirmationNum(dateString, receipt.getRoom(), Integer.toString(confirmationNum)))
+						{
+							uniqueNumFound = true;
+						}
+						if(numTries++ > 5) {
+							uniqueNumFound = true;
+							//break while debugging
+						}
+					}
+				} else {
+					request.getSession().setAttribute("errorMsg", "ERROR: unable to add email to Reservation table");
+				}
+				receipt.setConfirmationNum(Integer.toString(confirmationNum));
+				session.setAttribute("receipt", receipt);
+				
+				// Send confirmation email to user
 				String fromAddr = "noys.noreply@gmail.com";
 				String toAddr = receipt.getEmail();
 				String subj = "Nightmare on Your Street Reservation Confirmation";
 				String body = "Dear " + receipt.getName() + ",\n\n" 
 						+ "You are confirmed to be bringing " + receipt.getNumPeople() + " hostage(s) to " + receipt.getRoom() 
-						+ " on " + receipt.getDate() + ".";
+						+ " on " + receipt.getDate() + ". \nYour confirmation number is " + confirmationNum;
 				try {
 					MailHelper.sendMail(toAddr, fromAddr, subj, body);
 				} catch (MessagingException e) {
@@ -220,6 +257,21 @@ public class ETNController extends HttpServlet {
 				
 				session.invalidate(); // Invalidate session after confirmation page is displayed
 			}
+		}
+		else if(request.getParameter("Cancel") != null)
+		{
+			String confirmationNum = request.getParameter("confirmationNo");
+			if(ReservationDBUtil.cancelReservation(confirmationNum))
+			{
+				//Cancellation was successful
+				request.setAttribute("cancellationResult", true);
+			}
+			else
+			{
+				//Cancellation failed
+				request.setAttribute("cancellationResult", false);
+			}
+			this.getServletContext().getRequestDispatcher("/cancellations.jsp").forward(request, response);
 		}
 	}
 
