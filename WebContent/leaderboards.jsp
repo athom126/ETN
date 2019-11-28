@@ -62,7 +62,7 @@
 			<table>
 				<tr><th>Escape Time (minutes)</th><th>Name</th></tr>
 			<%
-					String query = "SELECT TIME, NAME FROM SAMPLE ORDER BY TIME ASC;";
+					String query = "SELECT TIME, NAME FROM STRODE ORDER BY TIME ASC;";
 					ps = conn.prepareStatement(query);
 					rs = ps.executeQuery();
 					while(rs.next()) {

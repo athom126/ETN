@@ -64,13 +64,13 @@
 				<label style="width:50px;font-family: 'Poppins', sans-serif;font-size: 15px; margin-right:10px;">Name: </label>
 				<input type="text" name="nameOfUser" id="nameOfUser" maxLength="30" required 
 				style="width:200px;font-family: 'Poppins', sans-serif;font-size: 15px;" title="Name of the user"><br>
-				<input type="hidden" id="tableName" name="tableName" value="SAMPLE">
+				<input type="hidden" id="tableName" name="tableName" value="STRODE">
 				<input type="submit" name="addEntry" id="addEntry" value="Add" class="addButton">
 			</form><br>
 			<table style="padding:none;table-layout:fixed;width:100%">
 				<tr><th>Escape Time<br>(minutes)</th><th>Name</th><th>Operations</th></tr>
 			<%
-					String query = "SELECT TIME, NAME, ID FROM SAMPLE ORDER BY TIME ASC;";
+					String query = "SELECT TIME, NAME, ID FROM STRODE ORDER BY TIME ASC;";
 					ps = conn.prepareStatement(query);
 					rs = ps.executeQuery();
 					while(rs.next()) {
@@ -92,12 +92,12 @@
 								</td>
 								<td class="td">
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
-									<input type="hidden" name="tableName" id="tableName" value="SAMPLE">
+									<input type="hidden" name="tableName" id="tableName" value="STRODE">
 									<input type="submit" name="editEntry" id="editEntry" value="Edit" class="editButton">
 							</form>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
-									<input type="hidden" name="tableName" id="tableName" value="SAMPLE">
+									<input type="hidden" name="tableName" id="tableName" value="STRODE">
 									<input type="submit" name="deleteEntry" id="deleteEntry" value="Delete" class="deleteButton">
 								</form>
 							</td>
