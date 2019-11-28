@@ -327,7 +327,6 @@ table, td, th {
 	margin-right: auto;
 	margin-left: auto;
 	padding: 20px;
-	table-layout: fixed;
 	font-family: 'Raleway', sans-serif;
 	font-size: 18px;
 }
@@ -338,7 +337,34 @@ table {
 	border-bottom: 0px;
 }
 
-.td {
-	border: 0;
-	align: center;
+.deleteButton {
+	background-color: #1a0004;
+	padding: 8px;
+	border: 2px solid #121212;
+	margin: none;
+	color: #FFFFFF;
+	font-family: 'Special Elite', cursive;
+	font-size: 16px;
+	width: 70px;
+}
+
+.editButton {
+	background-color: #2a2a2a;
+	padding: 8px;
+	border: 2px solid #121212;
+	margin: none;
+	color: #FFFFFF;
+	font-family: 'Special Elite', cursive;
+	font-size: 16px;
+	width: 70px;
+}
+
+.addButton {
+	background-color: #172b18;
+	padding: 8px;
+	border: none;
+	color: #FFFFFF;
+	font-family: 'Special Elite', cursive;
+	font-size: 16px;
+	width: 70px;
 }
