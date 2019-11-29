@@ -197,7 +197,6 @@ public class ReservationDBUtil {
 					ps.setString(3, dateString);
 					ps.setString(4, room);
 					int numRowsUpdated = ps.executeUpdate();
-					System.out.println("Updated " + numRowsUpdated + " rows for confirmationNum with room " + room + " and date = " + dateString);
 					if(numRowsUpdated == 1) {
 						return true;
 					} else {

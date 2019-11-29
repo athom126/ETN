@@ -8,8 +8,6 @@ package thomas.halpert.etn;
 import java.io.*;
 import java.util.*;
 import java.text.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -223,7 +221,11 @@ public class ETNController extends HttpServlet {
 					receipt.setDate(vr.getDate());
 				}
 				
-				// TO DO: Add the user to the database
+				// Add the user to the database
+				if(!UserDB.emailExists(receipt.getEmail()))
+				{
+					UserDB.addUser(receipt.getEmail(), receipt.getName());
+				}
 				
 				// Set the email column of the Reservation table to the email that the reservation is under
 				SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
@@ -301,7 +303,6 @@ public class ETNController extends HttpServlet {
 			else if(confirmationNum.length() == 8) {
 				try {
 					Integer.parseInt(confirmationNum); // Try parsing
-					System.out.println("Attempting to cancel reservationNum " + confirmationNum);
 					// Try canceling in the database
 					if(ReservationDBUtil.cancelReservation(confirmationNum))
 					{
