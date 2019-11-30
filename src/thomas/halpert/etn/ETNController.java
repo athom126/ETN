@@ -258,8 +258,7 @@ public class ETNController extends HttpServlet {
 							uniqueNumFound = true;
 						}
 						if(numTries++ > 5) {
-							uniqueNumFound = true;
-							//break while debugging
+							uniqueNumFound = true; //break to stop endless loop (not expected to occur)
 						}
 					}
 				} 
@@ -316,11 +315,27 @@ public class ETNController extends HttpServlet {
 									}
 								}
 								if(validName && user.trim().length() != 0) {
-									/* 
-									 * Code to change the name of the user 
-									 *	and the escape time in the associated 
-									 *	table in the database goes here
-									*/
+									if(tableName.equals("JIGSAW"))
+									{
+										if(!JigsawLeaderboardDB.editEntry(id, user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to edit selected entry.");
+										}
+									} 
+									else if(tableName.equals("STRODE"))
+									{
+										if(!StrodeLeaderboardDB.editEntry(id, user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to edit selected entry.");
+										}
+									} 
+									else // "BADHAM"
+									{
+										if(!BadhamLeaderboardDB.editEntry(id, user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to edit selected entry.");
+										}
+									}
 								}
 								else {
 									request.setAttribute("error", "Please enter a valid name in the name field.");
@@ -366,11 +381,27 @@ public class ETNController extends HttpServlet {
 									}
 								}
 								if(validName && user.trim().length() != 0) {
-									/* 
-									 * Code to add the name of the user 
-									 *	and the escape time to the requested 
-									 *	table in the database goes here
-									*/
+									if(tableName.equals("JIGSAW"))
+									{
+										if(!JigsawLeaderboardDB.addEntry(user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to add entry.");
+										}
+									} 
+									else if(tableName.equals("STRODE"))
+									{
+										if(!StrodeLeaderboardDB.addEntry(user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to add entry.");
+										}
+									} 
+									else // "BADHAM"
+									{
+										if(!BadhamLeaderboardDB.addEntry(user, timeToEscape))
+										{
+											request.setAttribute("error", "Unable to add entry.");
+										}
+									}
 								}
 								else {
 									request.setAttribute("error", "Please enter a valid name in the name field.");
@@ -402,11 +433,27 @@ public class ETNController extends HttpServlet {
 						Integer.parseInt(id); // Check if the id is parsable as an integer
 						// Check the table name is valid
 						if(tableName.equals("JIGSAW") || tableName.equals("STRODE") || tableName.equals("BADHAM")) {
-							
-							/* 
-							 * Code to delete the entry from the table goes here
-							 * 
-							*/
+							if(tableName.equals("JIGSAW"))
+							{
+								if(!JigsawLeaderboardDB.removeEntry(id))
+								{
+									request.setAttribute("error", "Unable to remove entry.");
+								}
+							} 
+							else if(tableName.equals("STRODE"))
+							{
+								if(!StrodeLeaderboardDB.removeEntry(id))
+								{
+									request.setAttribute("error", "Unable to remove entry.");
+								}
+							} 
+							else // "BADHAM"
+							{
+								if(!BadhamLeaderboardDB.removeEntry(id))
+								{
+									request.setAttribute("error", "Unable to remove entry.");
+								}
+							}
 						}
 						// Table doesn't exist currently
 						else {
