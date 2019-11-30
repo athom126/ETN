@@ -34,6 +34,14 @@
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
 	<div class="leaderboardPage">
 		<h3>Administrator</h3>
+			<% 
+				String error = "";
+				// Check if any errors exist from the previous request, if it exists
+				if(request.getAttribute("error") != null) {
+					error = (String)request.getAttribute("error");
+			%>
+				<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px"><%=error%></span>
+			<% } %>
 		<hr/>
 		<button class="toggleStrode" onclick="showStrode()" title="Click to display the leaderboard">The Strode Residence</button>
 		<div class="leaderboard" id="strodeTbl">
@@ -65,7 +73,7 @@
 				<input type="text" name="nameOfUser" id="nameOfUser" maxLength="30" required 
 				style="width:200px;font-family: 'Poppins', sans-serif;font-size: 15px;" title="Name of the user"><br>
 				<input type="hidden" id="tableName" name="tableName" value="STRODE">
-				<input type="submit" name="addEntry" id="addEntry" value="Add" class="addButton">
+				<input type="submit" name="operation" id="operation" value="Add" class="addButton">
 			</form><br>
 			<table style="padding:none;table-layout:fixed;width:100%">
 				<tr><th>Escape Time<br>(minutes)</th><th>Name</th><th>Operations</th></tr>
@@ -93,12 +101,12 @@
 								<td class="td">
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="STRODE">
-									<input type="submit" name="editEntry" id="editEntry" value="Edit" class="editButton">
+									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
 							</form>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="STRODE">
-									<input type="submit" name="deleteEntry" id="deleteEntry" value="Delete" class="deleteButton">
+									<input type="submit" name="operation" id="operation" value="Delete" class="deleteButton">
 								</form>
 							</td>
 						</tr>
@@ -139,7 +147,7 @@
 				<input type="text" name="nameOfUser" id="nameOfUser" maxLength="30" required 
 				style="width:200px;font-family: 'Poppins', sans-serif;font-size: 15px;" title="Name of the user"><br>
 				<input type="hidden" id="tableName" name="tableName" value="BADHAM">
-				<input type="submit" name="addEntry" id="addEntry" value="Add" class="addButton">
+				<input type="submit" name="operation" id="operation" value="Add" class="addButton">
 			</form><br>
 			<table style="padding:none;table-layout:fixed;width:100%">
 				<tr><th>Escape Time<br>(minutes)</th><th>Name</th><th>Operations</th></tr>
@@ -167,12 +175,12 @@
 								<td class="td">
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="BADHAM">
-									<input type="submit" name="editEntry" id="editEntry" value="Edit" class="editButton">
+									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
 							</form>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="BADHAM">
-									<input type="submit" name="deleteEntry" id="deleteEntry" value="Delete" class="deleteButton">
+									<input type="submit" name="operation" id="operation" value="Delete" class="deleteButton">
 								</form>
 							</td>
 						</tr>
@@ -213,7 +221,7 @@
 				<input type="text" name="nameOfUser" id="nameOfUser" maxLength="30" required 
 				style="width:200px;font-family: 'Poppins', sans-serif;font-size: 15px;" title="Name of the user"><br>
 				<input type="hidden" id="tableName" name="tableName" value="JIGSAW">
-				<input type="submit" name="addEntry" id="addEntry" value="Add" class="addButton">
+				<input type="submit" name="operation" id="operation" value="Add" class="addButton">
 			</form><br>
 			<table style="padding:none;table-layout:fixed;width:100%">
 				<tr><th>Escape Time<br>(minutes)</th><th>Name</th><th>Operations</th></tr>
@@ -241,12 +249,12 @@
 								<td class="td">
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="JIGSAW">
-									<input type="submit" name="editEntry" id="editEntry" value="Edit" class="editButton">
+									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
 							</form>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="JIGSAW">
-									<input type="submit" name="deleteEntry" id="deleteEntry" value="Delete" class="deleteButton">
+									<input type="submit" name="operation" id="operation" value="Delete" class="deleteButton">
 								</form>
 							</td>
 						</tr>

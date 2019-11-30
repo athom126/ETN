@@ -262,7 +262,8 @@ public class ETNController extends HttpServlet {
 							//break while debugging
 						}
 					}
-				} else {
+				} 
+				else {
 					request.getSession().setAttribute("errorMsg", "ERROR: unable to add email to Reservation table");
 				}
 				receipt.setConfirmationNum(Integer.toString(confirmationNum));
@@ -286,6 +287,141 @@ public class ETNController extends HttpServlet {
 				
 				session.invalidate(); // Invalidate session after confirmation page is displayed
 			}
+		}
+		// A request to modify the leader board is made
+		else if(request.getParameter("operation") != null) {
+			String operation = request.getParameter("operation");
+			if(operation.equals("Edit")) {
+				if(request.getParameter("entryToEdit") != null && request.getParameter("timeToEscape") != null
+					&& request.getParameter("nameOfUser") != null && request.getParameter("tableName") != null) {
+					String id = request.getParameter("entryToEdit"); // ID of entry being modified
+					String tableName = request.getParameter("tableName"); // The name of table being modified
+					String user = request.getParameter("nameOfUser"); // The name of the user for this entry
+					String timeToEscape = request.getParameter("timeToEscape"); // The escape time in minutes
+					try {
+						Integer.parseInt(timeToEscape); // Check if the time and ID are parsable as an integer
+						Integer.parseInt(id);
+						// Check if the time is within a valid range
+						if(Integer.parseInt(timeToEscape) >= 1 && Integer.parseInt(timeToEscape) <= 999) {
+							// Check the table name is valid
+							if(tableName.equals("JIGSAW") || tableName.equals("STRODE") || tableName.equals("BADHAM")) {
+								boolean validName = true;
+								// Check if the name of the user is valid
+								char[] nameArray = user.toCharArray();
+								for(Character c : nameArray) {
+									// Ensure that name contains only letters and spaces
+									if(!Character.isLetter(c) && c != ' ') {
+										validName = false;
+										break;
+									}
+								}
+								if(validName && user.trim().length() != 0) {
+									/* 
+									 * Code to change the name of the user 
+									 *	and the escape time in the associated 
+									 *	table in the database goes here
+									*/
+								}
+								else {
+									request.setAttribute("error", "Please enter a valid name in the name field.");
+								}
+							}
+							// Table doesn't exist currently
+							else {
+								request.setAttribute("error", "Please enter a valid table name.");
+							}
+						}
+						// Out of range
+						else {
+							request.setAttribute("error", "The value of escape time must be between 1 and 999 minutes.");
+						}
+					}
+					catch(NumberFormatException nfe) {
+						request.setAttribute("error", "Please enter a 1 to 3 digit number for the escape time.");
+					}
+				}
+				else {
+					request.setAttribute("error", "Please enter an escape time and a name.");
+				}
+			}
+			else if(operation.equals("Add")) {
+				if(request.getParameter("timeToEscape") != null && request.getParameter("nameOfUser") != null && request.getParameter("tableName") != null) {
+					String tableName = request.getParameter("tableName"); // The name of table being modified
+					String user = request.getParameter("nameOfUser"); // The name of the user for this entry
+					String timeToEscape = request.getParameter("timeToEscape"); // The escape time in minutes
+					try {
+						Integer.parseInt(timeToEscape); // Check if the time is parsable as an integer
+						// Check if the time is within a valid range
+						if(Integer.parseInt(timeToEscape) >= 1 && Integer.parseInt(timeToEscape) <= 999) {
+							// Check the table name is valid
+							if(tableName.equals("JIGSAW") || tableName.equals("STRODE") || tableName.equals("BADHAM")) {
+								boolean validName = true;
+								// Check if the name of the user is valid
+								char[] nameArray = user.toCharArray();
+								for(Character c : nameArray) {
+									// Ensure that name contains only letters and spaces
+									if(!Character.isLetter(c) && c != ' ') {
+										validName = false;
+										break;
+									}
+								}
+								if(validName && user.trim().length() != 0) {
+									/* 
+									 * Code to add the name of the user 
+									 *	and the escape time to the requested 
+									 *	table in the database goes here
+									*/
+								}
+								else {
+									request.setAttribute("error", "Please enter a valid name in the name field.");
+								}
+							}
+							else {
+								request.setAttribute("error", "Please enter a valid table name.");
+							}
+						}
+						// Out of range
+						else {
+							request.setAttribute("error", "The value of escape time must be between 1 and 999 minutes.");
+						}
+					}
+					catch(NumberFormatException nfe) {
+						request.setAttribute("error", "Please enter a 1 to 3 digit number for the escape time.");
+					}
+				}
+				else {
+					request.setAttribute("error", "Please enter an escape time and a name.");
+				}
+			}
+			// Delete request is made
+			else {
+				if(request.getParameter("entryToDelete") != null && request.getParameter("tableName") != null) {
+					String tableName = request.getParameter("tableName"); // The name of table being modified
+					String id = request.getParameter("entryToDelete"); // ID of entry being deleted
+					try {
+						Integer.parseInt(id); // Check if the id is parsable as an integer
+						// Check the table name is valid
+						if(tableName.equals("JIGSAW") || tableName.equals("STRODE") || tableName.equals("BADHAM")) {
+							
+							/* 
+							 * Code to delete the entry from the table goes here
+							 * 
+							*/
+						}
+						// Table doesn't exist currently
+						else {
+							request.setAttribute("error", "Please enter a valid table name.");
+						}
+					}					
+					catch(NumberFormatException nfe) {
+						request.setAttribute("error", "Please enter a valid entry ID.");
+					}
+				}				
+				else {
+					request.setAttribute("error", "Please select an entry to delete and a table from which to delete the entry.");
+				}
+			}
+			this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response); // Forward the request back to the admin page
 		}
 		else if(request.getParameter("Cancel") != null) 
 		{
