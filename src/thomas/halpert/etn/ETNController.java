@@ -303,11 +303,22 @@ public class ETNController extends HttpServlet {
 			else if(confirmationNum.length() == 8) {
 				try {
 					Integer.parseInt(confirmationNum); // Try parsing
+					
+					// Grab email so we can see if this was their only reservation
+					String cancelledEmail = ReservationDBUtil.getEmailByConfNum(confirmationNum);
+					
 					// Try canceling in the database
 					if(ReservationDBUtil.cancelReservation(confirmationNum))
 					{
 						//Cancellation was successful
 						request.setAttribute("cancellationResult", true);
+						
+						// Check if that was the only reservation for user email
+						if((cancelledEmail != "") && (ReservationDBUtil.numUserReservations(cancelledEmail) == 0))
+						{
+							// Remove user email from UserDB
+							UserDB.removeUser(cancelledEmail);
+						}
 					}
 					else
 					{
