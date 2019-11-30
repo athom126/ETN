@@ -72,7 +72,7 @@ public class UserDB {
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "delete from Users where EMAIL = ?";
+		String query = "DELETE FROM USERS WHERE EMAIL = ?";
 		if(conn != null) {
 			try {
 				ps = conn.prepareStatement(query);
