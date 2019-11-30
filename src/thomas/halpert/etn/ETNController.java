@@ -110,7 +110,9 @@ public class ETNController extends HttpServlet {
 			String dateString = dbSdf.format(date1);
 			// Put a hold on currently selected room while payment is processed
 			ReservationDBUtil.holdRoom(dateString, room);
-			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); // Display checkout page
+			
+//			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); // Display checkout page
+			response.sendRedirect("https://localhost:8443/ThomasHalpertETN/checkout.jsp");
 		}
 	}
 
