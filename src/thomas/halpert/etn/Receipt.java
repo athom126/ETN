@@ -7,7 +7,9 @@ public class Receipt {
 	String numPeople; 		// Store number of participants
 	String room; 			// Stores selected room
 	String date; 			// Store date of reservation
-	String confirmationNum; //Store confirmation number of reservation
+	String confirmationNum; // Store confirmation number of reservation
+	String totalCost;		// Store total cost as a formatted String
+	
 	
 	// Default constructor
 	public Receipt() {
@@ -17,6 +19,7 @@ public class Receipt {
 		this.room = "";
 		this.date = "";
 		this.confirmationNum = "";
+		this.totalCost = "";
 	}
 	
 	//Setters
@@ -48,6 +51,10 @@ public class Receipt {
 	public void setConfirmationNum(String confNum)
 	{
 		this.confirmationNum = confNum;
+	}
+	
+	public void setTotalCost(Double cost) {
+		this.totalCost = String.format("$%.2f", cost);
 	}
 	
 	//Getters
@@ -86,5 +93,8 @@ public class Receipt {
 	{
 		return this.date;
 	}
-
+	
+	public String getTotalCost() {
+		return this.totalCost;
+	}
 }

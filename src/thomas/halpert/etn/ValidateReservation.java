@@ -15,6 +15,7 @@ public class ValidateReservation {
 	String numPeople; // Store number of participants
 	String room; // Stores selected room
 	String date; // Store date of reservation
+	Double totalCost; // Store total cost 
 	
 	private ArrayList<String> errors = new ArrayList<String>(); // Errors get added into here during validation process
 
@@ -25,7 +26,6 @@ public class ValidateReservation {
 		this.room = "";
 		this.date = "";
 	}
-
 	
 	// Accessors 
 	public String getName() {
@@ -44,6 +44,14 @@ public class ValidateReservation {
 		return this.date;
 	}
 	
+	public String getTotalCostFormatted() {
+		return String.format("$%.2f", this.totalCost);
+	}
+	
+	public Double getTotalCost() {
+		return this.totalCost;
+	}
+	
 	// Setters
 	public void setName(String name) {
 		this.name= name;
@@ -59,6 +67,10 @@ public class ValidateReservation {
 	
 	public void setDate(String date) {
 		this.date = date;
+	}	
+	
+	public void setTotalCost(String numPeople) {
+		this.totalCost = 40.0 * Double.parseDouble(this.getNumPeople());
 	}
 	
 	/* Calls methods to validate each parameter
@@ -72,15 +84,15 @@ public class ValidateReservation {
 			this.errors.clear();
 		}
 				
-		
 		// Validate request parameters
 		this.validateName(name);
 		this.validateNumPeople(numPeople); 
 		this.validateRoom(room);
 		this.validateDate(date);
 		
-		// If there are no errors, return true
+		// If there are no errors, set the total cost, and return true
 		if(errors.isEmpty()) {
+			this.setTotalCost(numPeople);
 			return true;
 		}
 		return false; // Invalid request parameter(s)

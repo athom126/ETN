@@ -97,6 +97,7 @@ public class ETNController extends HttpServlet {
 		}
 		// If reservation form contains no errors, proceed to checkout
 		else {
+					
 			SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
 			SimpleDateFormat dbSdf = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
 			Date date1 = null;
@@ -219,6 +220,7 @@ public class ETNController extends HttpServlet {
 					receipt.setNumPeople(vr.getNumPeople());
 					receipt.setRoom(vr.getRoom());
 					receipt.setDate(vr.getDate());
+					receipt.setTotalCost(vr.getTotalCost());
 				}
 				
 				// Add the user to the database

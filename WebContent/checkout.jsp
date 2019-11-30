@@ -7,6 +7,10 @@
 	if(payment == null) {
 		payment = new ValidatePayment();
 	}
+	ValidateReservation reservation = (ValidateReservation)session.getAttribute("reservation");
+	if(reservation == null) {
+		reservation = new ValidateReservation();
+	}
 %>
 <!DOCTYPE html>
 <HTML>
@@ -42,6 +46,7 @@
 		<%}%>
 				<form name="form" autocomplete="off" method="post" action="ETNController">
 				<h3 style="margin-bottom: 20px">Payment Details</h3>
+						<u>Your card will be charged <%=reservation.getTotalCostFormatted()%>.</u><br><br>
 						<label for="email" style="display:inline-block;float:left;align:right;margin-right:10px">Email: </label>
 						<input style="display:inline-block;float:left;margin-left: 10px;background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
 						type="email" name="email" id="email" title="Email address to where a confirmation email can be sent" value="<%=payment.getEmail()%>">
