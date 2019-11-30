@@ -10,6 +10,10 @@
       <web-resource-name>Secure Checkout</web-resource-name>
       <url-pattern>/checkout.jsp</url-pattern>
     </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>Secure Login</web-resource-name>
+      <url-pattern>/login.jsp</url-pattern>
+    </web-resource-collection>
     <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
