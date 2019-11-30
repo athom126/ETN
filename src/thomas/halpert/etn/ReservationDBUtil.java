@@ -39,7 +39,7 @@ public class ReservationDBUtil {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		String query = "select * from RESERVATION where Date = ? and Room = ?";
+		String query = "select * from RESERVATION where DATE = ? and ROOM = ?";
 		if(conn != null) {
 			try {
 				ps = conn.prepareStatement(query);
@@ -76,7 +76,7 @@ public class ReservationDBUtil {
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "UPDATE RESERVATION SET Status = 'on hold' WHERE Date = ? and Room = ?";
+		String query = "UPDATE RESERVATION SET STATUS = 'on hold' WHERE DATE = ? and ROOM = ?";
 		if(conn != null) {
 			try {
 				ps = conn.prepareStatement(query);
@@ -107,7 +107,7 @@ public class ReservationDBUtil {
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "UPDATE RESERVATION SET Status = 'open' WHERE Date = ? and Room = ?";
+		String query = "UPDATE RESERVATION SET STATUS = 'open' WHERE DATE = ? and ROOM = ?";
 		if(conn != null) {
 			try {
 				ps = conn.prepareStatement(query);
@@ -139,7 +139,7 @@ public class ReservationDBUtil {
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "UPDATE RESERVATION SET Email = ? WHERE Date = ? and Room = ?";
+		String query = "UPDATE RESERVATION SET EMAIL = ? WHERE DATE = ? and ROOM = ?";
 		
 		if(conn != null) {
 			try {
@@ -174,8 +174,8 @@ public class ReservationDBUtil {
 		PreparedStatement ps = null, ps2 = null;
 		ResultSet rs = null;
 
-		String query = "UPDATE RESERVATION SET Confirmation_Num = ?, Status = 'reserved', Email = ? WHERE Date = ? AND Room = ?";
-		String checkQuery = "SELECT * FROM RESERVATION WHERE Confirmation_Num = ?";
+		String query = "UPDATE RESERVATION SET CONFIRMATION_NUM = ?, STATUS = 'reserved', EMAIL = ? WHERE DATE = ? AND ROOM = ?";
+		String checkQuery = "SELECT * FROM RESERVATION WHERE CONFIRMATION_NUM = ?";
 
 		if(conn != null) {
 			try {
@@ -185,7 +185,6 @@ public class ReservationDBUtil {
 
 				if(rs.next()) 
 				{
-					System.out.println("confirmation num alrdy exists");
 					//Confirmation number already exists
 					return false;
 				}
@@ -219,12 +218,82 @@ public class ReservationDBUtil {
 		}
 	}
 	
+	public static int numUserReservations(String email)
+	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int numRowsForEmail = -1; //default to a value that won't trigger removing users
+		
+		String query = "SELECT COUNT(1) FROM RESERVATION WHERE EMAIL = ?";
+		if(conn != null)
+		{
+			try
+			{
+				ps = conn.prepareStatement(query);
+				ps.setString(1, email);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					numRowsForEmail = rs.getInt(1);
+				}
+				return numRowsForEmail;
+			} catch (SQLException e) {
+				System.out.println(e);
+				return numRowsForEmail;
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+			}
+		}
+		else
+		{
+			return numRowsForEmail;
+		}
+	}
+	
+	public static String getEmailByConfNum(String confNum)
+	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT * FROM RESERVATION WHERE CONFIRMATION_NUM = ?";
+		if(conn != null) {
+			try {
+				ps = conn.prepareStatement(query);
+				ps.setString(1, confNum);
+				rs = ps.executeQuery();
+				
+				if(rs.next())
+				{
+					//found reservation by confirmation number
+					return rs.getString("EMAIL");
+				}
+				else
+				{
+					return "";
+				}
+			} catch (SQLException e) {
+				System.out.println(e);
+				return "";
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+				DBUtil.closeResultSet(rs);
+			}
+		}
+		else
+		{
+			//error
+			return "";
+		}
+	}
+	
 	public static boolean cancelReservation(String confirmationNum)
 	{
 		Connection conn = getConnection();
 		PreparedStatement ps = null;
 		
-		String query = "UPDATE RESERVATION SET Email = NULL, Status = 'open', Confirmation_Num = NULL WHERE Confirmation_Num = ?";
+		String query = "UPDATE RESERVATION SET EMAIL = NULL, STATUS = 'open', CONFIRMATION_NUM = NULL WHERE CONFIRMATION_NUM = ?";
 		
 		if(conn != null) {
 			try {
