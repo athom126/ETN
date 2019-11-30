@@ -7,6 +7,8 @@
 
 package thomas.halpert.etn;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ValidateReservation {
@@ -159,14 +161,26 @@ public class ValidateReservation {
 	}
 	
 	// Checks if the date is a valid (real) date
-	// TO DO: Check is the date is an open date and in the database
+	// Check is the date is an open date and in the database
 	public boolean validateDate(String date) {
 		if(date == null) {
 			errors.add("A reservation date and time must be selected");
 			return false;
 		}
 		try {
-			// TO DO
+			SimpleDateFormat sdf = new SimpleDateFormat("EEEEE-MMMM-dd-yyyy-h-aa");
+			SimpleDateFormat dbSdf = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+			Date date1 = sdf.parse(date); //If input format is incorrect, this will throw an exception
+			String dateString = dbSdf.format(date1);
+
+			//Make sure room slot is open
+			if(!ReservationDBUtil.checkRoomStatus(dateString, this.room).equalsIgnoreCase("open"))
+			{
+				this.errors.add("Room not open at that time slot.");
+			}
+		} catch (ParseException e1) {
+			this.errors.add("Invalid date format");
+			return false;
 		} catch (Exception e) {
 			this.errors.add("Invalid date entered");
 			return false;
