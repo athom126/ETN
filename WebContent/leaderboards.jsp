@@ -160,7 +160,7 @@
 			</table>
 		</div>	
 		<br><br>
-
 	</div>
+	<hr><div style="background-color:#121212;align:center"><a href="index.html">Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="login.jsp">Administrator</a></div>
 </body>
 </html>
