@@ -98,6 +98,61 @@ public class UserDB {
 		}
 	}
 
+	public static boolean isAdmin(String userName)
+	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT * FROM USERS WHERE USER_NAME = ?";
+		if(conn != null) {
+			try {
+				ps = conn.prepareStatement(query);
+				ps.setString(1, userName);
+				rs = ps.executeQuery();
+				return rs.next();
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+				DBUtil.closeResultSet(rs);
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public static boolean login(String userName, String password)
+	{
+		Connection conn = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASS = ?";
+		if(conn != null) {
+			try {
+				ps = conn.prepareStatement(query);
+				ps.setString(1, userName);
+				ps.setString(2, password);
+				rs = ps.executeQuery();
+				return rs.next();
+			} catch (SQLException e) {
+				System.out.println(e);
+				return false;
+			} finally {
+				DBUtil.closePreparedStatement(ps);
+				DBUtil.closeResultSet(rs);
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	private static Connection getConnection()
 	{
 		Connection conn = null;

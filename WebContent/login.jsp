@@ -25,6 +25,15 @@
 		<li><a href="contact.html">Contact</a></li>
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
+	<%
+	if(request.getAttribute("loginFailure") != null)
+	{
+		String errorMsg = (String)request.getAttribute("loginFailure");
+		%>
+		<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px"><%= errorMsg %></span>
+		<%
+	}
+	%>
 	<div>
 		<form autocomplete="off" method="post" action="ETNController">
 			<h3>Administrator Login</h3>
