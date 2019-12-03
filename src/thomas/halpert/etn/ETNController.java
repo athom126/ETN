@@ -521,5 +521,30 @@ public class ETNController extends HttpServlet {
 			}
 			this.getServletContext().getRequestDispatcher("/cancellations.jsp").forward(request, response);
 		}
+		else if(request.getParameter("Login") != null)
+		{
+			// Admin login is only login for current website functionality
+			String userName = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			if(UserDB.isAdmin(userName))
+			{
+				if(UserDB.login(userName, password))
+				{
+					request.setAttribute("loginFailure", ""); //clear error msg
+					this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+				}
+				else
+				{
+					request.setAttribute("loginFailure", "Incorrect password.");
+					this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+				}
+			}
+			else
+			{
+				request.setAttribute("loginFailure", "Provided username is not an Admin account.");
+				this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+			}
+		}
 	}
 }
