@@ -111,8 +111,8 @@ public class ETNController extends HttpServlet {
 			// Put a hold on currently selected room while payment is processed
 			ReservationDBUtil.holdRoom(dateString, room);
 			
-//			this.getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response); // Display checkout page
-			response.sendRedirect("https://localhost:8443/ThomasHalpertETN/checkout.jsp");
+//			response.sendRedirect("https://localhost:8443/ThomasHalpertETN/checkout.jsp");
+			response.sendRedirect("https://dev8.jhuep.com/ThomasHalpertETN/checkout.jsp");
 		}
 	}
 

@@ -44,7 +44,8 @@
 		<%	} %>	
 		</ul>
 		<%}%>
-				<form name="form" autocomplete="off" method="post" action="http://localhost:8080/ThomasHalpertETN/ETNController">
+				<!-- <form name="form" autocomplete="off" method="post" action="http://localhost:8080/ThomasHalpertETN/ETNController"> -->
+				<form name="form" autocomplete="off" method="post" action="ETNController">
 				<h3 style="margin-bottom: 20px">Payment Details</h3>
 						<u>Your card will be charged <%=reservation.getTotalCostFormatted()%>.</u><br><br>
 						<label for="email" style="display:inline-block;float:left;align:right;margin-right:10px">Email: </label>
