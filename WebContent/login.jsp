@@ -25,18 +25,18 @@
 		<li><a href="contact.html">Contact</a></li>
 	</ul>
 	<img src="resources/site-banner.jpg" class="banner" align="middle" width="100%" height="100%" alt="Nightmare On Your Street"/>
-	<%
+	<div>
+		<form autocomplete="off" method="post" action="ETNController">
+			<h3>Administrator Login</h3>
+			<%
 	if(request.getAttribute("loginFailure") != null)
 	{
 		String errorMsg = (String)request.getAttribute("loginFailure");
 		%>
-		<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;font-size: 15px"><%= errorMsg %></span>
+		<span style="color: #820b1e; list-style-type:none; font-family: 'Poppins', sans-serif;left: -10px;text-align:center;font-size: 15px"><%=errorMsg%></span><br>		
 		<%
 	}
 	%>
-	<div>
-		<form autocomplete="off" method="post" action="ETNController">
-			<h3>Administrator Login</h3>
 			<label style="margin-right:10px">Username:</label>
 			<input style="background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
 			type="text" name="username" id="username" title="Admin username"/><br>
