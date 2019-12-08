@@ -102,7 +102,7 @@
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="STRODE">
 									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
-							</form>
+							</form><br>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="STRODE">
@@ -176,7 +176,7 @@
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="BADHAM">
 									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
-							</form>
+							</form><br>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="BADHAM">
@@ -250,7 +250,7 @@
 									<input type="hidden" name="entryToEdit" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="JIGSAW">
 									<input type="submit" name="operation" id="operation" value="Edit" class="editButton">
-							</form>
+							</form><br>
 								<form name="delete-form" id="delete-form" method="post" action="ETNController">
 									<input type="hidden" name="entryToDelete" value="<%=entryId%>">
 									<input type="hidden" name="tableName" id="tableName" value="JIGSAW">
