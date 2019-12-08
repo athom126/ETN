@@ -29,7 +29,7 @@
 		<form autocomplete="off" method="post" action="ETNController">
 			<h3>Cancel Reservations</h3>
 			Enter the confirmation number of the <br>
-			reservation you would like to cancel.
+			reservation you would like to cancel.<br>
 			<input maxlength="8" required style="background: #000000;font-family: 'Indie Flower', cursive;font-size:24px;color:#FFFFFF;background:#171616;border:0;outline:0;width:250px;" 
 			type="text" name="confirmationNo" id="confirmationNo" title="The confirmation number of the reservation to be cancelled."/>
 			<input type="submit" name="Cancel" value="Cancel" class="cancelButton"><br>
